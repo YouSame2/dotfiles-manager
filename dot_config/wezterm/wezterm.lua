@@ -11,9 +11,10 @@ config.color_scheme = 'Catppuccin Macchiato (Gogh)'
 
 config.window_decorations = "RESIZE"
 config.hide_tab_bar_if_only_one_tab = true
+config.window_close_confirmation = 'NeverPrompt'
 
-config.window_background_opacity = 0.9
-config.macos_window_background_blur = 14
+config.window_background_opacity = 0.8
+config.macos_window_background_blur = 10
 
 -- Keep adding configuration options here
 -- 
