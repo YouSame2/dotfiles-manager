@@ -1,0 +1,4 @@
+# this file contains all aliases that should work on both MacOS and Windows
+# for Windows only alias -> add to .bashrc
+# for MacOS only alias -> add to .zshrc
+
