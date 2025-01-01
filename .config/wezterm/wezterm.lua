@@ -9,7 +9,7 @@ config.font_size = 18
 
 config.color_scheme = 'Catppuccin Macchiato (Gogh)'
 
-config.window_decorations = "TITLE | RESIZE"
+config.window_decorations = "RESIZE"
 config.hide_tab_bar_if_only_one_tab = true
 config.window_close_confirmation = 'NeverPrompt'
 
