@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# i couldnt find any other way to access my shell functions without sourcing this file. if anyone knows how to allow this subshell script to access .bashrc or .zshrc functions without sourcing let me know!
 
 set -e
 
@@ -33,7 +34,7 @@ fi
 mkdir -p "$DOTFILES_DIR/$MKDIR_PATH" && \
 mv -i "$TARGET" "$DOTFILES_DIR/$MKDIR_PATH" && \
 # Append the target path to the 'links' section of install.conf.yaml
-sed -i "/- link:/a \ \   $CURRENT_DIR/$TARGET_NAME: $RELATIVE_PATH" "$INSTALL_FILE" || \
+      " "$INSTALL_FILE" || \
 { echo "Error: Please double check the files."; exit 1; }
 
 # Confirmation
