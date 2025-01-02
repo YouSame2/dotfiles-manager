@@ -7,11 +7,12 @@ OS="$(uname -s)"
 
 # Set the config file based on the OS
 if [[ "$OS" == "Darwin" ]]; then
-    echo "MacOS detected using ./install.conf.yaml
+    echo "MacOS detected using './install.conf.yaml'
     "
     CONFIG="install.conf.yaml"
 elif [[ "$OS" =~ MINGW|CYGWIN|MSYS ]]; then
     CONFIG="windows-install.conf.yaml"
+    echo "Windows detected using './windows-install.conf'"
 else
     echo "Unsupported operating system: $OS"
     exit 1

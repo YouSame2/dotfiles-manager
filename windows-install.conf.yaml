@@ -1,12 +1,12 @@
 - defaults:
-      link:
-          create: true # Automatically create parent directories if they don't exist
+    link:
+      create: true # Automatically create parent directories if they don't exist
 
 - link:
-      ~/.config: .config
+    ~/.config: .config
+    ~/.testwindowsdir: testwindowsdir # this should only appear on windows
 
-- clean: ['~']
-      
+- clean: ["~"]
 # example conf
 # - defaults:
 #     link:
