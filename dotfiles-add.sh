@@ -11,7 +11,7 @@ fi
 DOTFILES_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 CURRENT_DIR=$(dirs)
 
-INSTALL_FILE="$DOTFILES_DIR/windows-install.conf.yaml" # Path to the install.conf.yaml file
+INSTALL_FILE="$DOTFILES_DIR/windows-install.conf.yaml"
 
 TARGET=$1
 TARGET_PATH=$(realpath "$TARGET")
@@ -29,11 +29,12 @@ if [ ! -e "$TARGET_PATH" ]; then
   exit 1
 fi
 
-# Append the target path to the 'links' section of install.conf.yaml
-sed -i "/- link:/a \ \   $CURRENT_DIR/$TARGET_NAME: $RELATIVE_PATH" "$INSTALL_FILE"
-
 # Make and move the target to the dotfiles directory
-mkdir -p "$DOTFILES_DIR/$MKDIR_PATH" && mv -i "$TARGET" "$DOTFILES_DIR/$MKDIR_PATH"
+mkdir -p "$DOTFILES_DIR/$MKDIR_PATH" && \
+mv -i "$TARGET" "$DOTFILES_DIR/$MKDIR_PATH" && \
+# Append the target path to the 'links' section of install.conf.yaml
+sed -i "/- link:/a \ \   $CURRENT_DIR/$TARGET_NAME: $RELATIVE_PATH" "$INSTALL_FILE" || \
+{ echo "Error: Please double check the files."; exit 1; }
 
 # Confirmation
 echo ''
