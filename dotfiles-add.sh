@@ -12,6 +12,7 @@ fi
 DOTFILES_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 CURRENT_DIR=$(dirs)
 
+# TODO change install file 
 INSTALL_FILE="$DOTFILES_DIR/windows-install.conf.yaml"
 
 TARGET=$1

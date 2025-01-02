@@ -4,6 +4,8 @@
 
 # alias dotfiles-sync='cd "$HOME/Documents/Repos/Personal/dotfiles" && ./install'
 
+# TODO adjust repos dir on windows to match mac
+
 dotfiles-sync() {
     cd "$HOME/Documents/Repos/Personal/dotfiles" && ./install
 }
