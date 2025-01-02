@@ -2,3 +2,9 @@
 # for Windows only alias -> add to .bashrc
 # for MacOS only alias -> add to .zshrc
 
+# alias dotfiles-sync='cd "$HOME/Documents/Repos/Personal/dotfiles" && ./install'
+
+dotfiles-sync() {
+    cd "$HOME/Documents/Repos/Personal/dotfiles" && ./install
+}
+export -f dotfiles-sync
