@@ -3,7 +3,6 @@
       create: true # Automatically create parent directories if they don't exist
 
 - link:
-    ~/twd: twd
     ~/.config: .config
     ~/testwindowsdir: testwindowsdir # this should only appear on windows
 
