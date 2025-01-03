@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
+
 # i couldnt find any other way to access my shell functions without sourcing this file. if anyone knows how to allow this subshell script to access .bashrc or .zshrc functions without sourcing let me know!
+source ~/.config/aliases/.universal_aliases
 
 set -e
 
@@ -7,6 +9,15 @@ set -e
 if [ -z "$1" ]; then
   echo "Error: Please provide a file or directory as an argument."
   exit 1
+fi
+
+# set OS specific vars here 👇🏽
+OS="$(uname -s)"
+
+if [[ "$OS" =~ MINGW|CYGWIN|MSYS ]]; then
+  SED_FLAG=""
+elif [[ "$OS" == "Darwin" ]]; then
+  SED_FLAG="\"\"" # mac sed requires backup flag after -i flag
 fi
 
 DOTFILES_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
@@ -35,7 +46,7 @@ fi
 mkdir -p "$DOTFILES_DIR/$MKDIR_PATH" && \
 mv -i "$TARGET" "$DOTFILES_DIR/$MKDIR_PATH" && \
 # Append the target path to the 'links' section of install.conf.yaml
-      " "$INSTALL_FILE" || \
+sed -i $SED_FLAG "/- link:/a\ \ \ \ $CURRENT_DIR/$TARGET_NAME: $RELATIVE_PATH" "$INSTALL_FILE" || \
 { echo "Error: Please double check the files."; exit 1; }
 
 # Confirmation
