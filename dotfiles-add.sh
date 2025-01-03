@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 
-# i couldnt find any other way to access my shell functions without sourcing this file. if anyone knows how to allow this subshell script to access .bashrc or .zshrc functions without sourcing let me know!
-source ~/.config/aliases/.universal_aliases
-
 set -e
 
 # Ensure an argument is passed
@@ -10,6 +7,15 @@ if [ -z "$1" ]; then
   echo "Error: Please provide a file or directory as an argument."
   exit 1
 fi
+
+# Ensure target does not contain subdirs
+if [[ "$1" == */* ]]; then
+  echo "Error: '/' charc found! Subdirectories are not supported yet. To add Target file/directory please first cd to the parent directory of target"
+  exit 1
+fi
+
+# i couldnt find any other way to access my shell functions without sourcing this file. if anyone knows how to allow this subshell script to access .bashrc or .zshrc functions without sourcing let me know!
+source ~/.config/aliases/.universal_aliases
 
 DOTFILES_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 CURRENT_DIR=$(dirs)
@@ -49,12 +55,10 @@ mv -i "$TARGET" "$DOTFILES_DIR/$MKDIR_PATH" && \
   OS="$(uname -s)"
   
   if [[ "$OS" == "Darwin" ]]; then
-    echo "darwin"
     sed -i '' "/- link:/a\\
     $CURRENT_DIR/$TARGET_NAME: $RELATIVE_PATH\\
 " "$INSTALL_FILE"
   elif [[ "$OS" =~ MINGW|CYGWIN|MSYS ]]; then
-    echo "windows"
     sed -i "/- link:/a\\
     $CURRENT_DIR/$TARGET_NAME: $RELATIVE_PATH\\" "$INSTALL_FILE"
   else
@@ -67,7 +71,6 @@ mv -i "$TARGET" "$DOTFILES_DIR/$MKDIR_PATH" && \
 # Confirmation
 echo ''
 echo "'$TARGET' has been added to 'install.conf.yaml' and moved to '$DOTFILES_DIR/$MKDIR_PATH'."
-echo ''
 
 # Create symlinks
 dotfiles-sync

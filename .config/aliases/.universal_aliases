@@ -2,16 +2,18 @@
 # for Windows only alias -> add to .bashrc
 # for MacOS only alias -> add to .zshrc
 
-# alias dotfiles-sync='cd "$HOME/Documents/Repos/Personal/dotfiles" && ./install'
-
 # TODO adjust repos dir on windows to match mac
 
+export DOTFILES=~/Repos/Personal/dotfiles
+
+alias dotfiles='cd ~/Repos/Personal/dotfiles'
+
 dotfiles-sync() {
-    cd "$HOME/Documents/Repos/Personal/dotfiles" && ./install
+    $HOME/Repos/Personal/dotfiles/install
 }
 export -f dotfiles-sync
 
 dotfiles-add() {
-    ~/Documents/Repos/Personal/dotfiles/dotfiles-add.sh "$@"
+    ~/Repos/Personal/dotfiles/dotfiles-add.sh "$@"
 }
 export -f dotfiles-add
