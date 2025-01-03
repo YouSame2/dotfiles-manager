@@ -1,27 +1,12 @@
 - defaults:
-      link:
-          create: true # Automatically create parent directories if they don't exist
+    link:
+      create: true # Automatically create parent directories if they don't exist
 
 - link:
-      ~/.config: .config
+    ~/twd/config.lua: twd/config.lua
+    ~/.config: .config
 
-- clean: ['~']
-      
-# example conf
-# - defaults:
-#     link:
-#       relink: true
+- clean: ["~"]
 
-# - clean: ['~']
-
-# - link:
-#     ~/.tmux.conf: tmux.conf
-#     ~/.vim: vim
-#     ~/.vimrc: vimrc
-
-# - create:
-#     - ~/downloads
-#     - ~/.vim/undo-history
-
-# - shell:
-#   - [git submodule update --init --recursive, Installing submodules]
+- shell:
+    - [git submodule update --init --recursive, Installing submodules]
