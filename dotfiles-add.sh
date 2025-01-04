@@ -39,34 +39,13 @@ if [ ! -e "$TARGET_PATH" ]; then
   exit 1
 fi
 
-# --------------------
-# EXPLANATION:
-# --------------------
-# ok so the below code is a little weird using sed on mac vs windows has diff behavior. so diff commands need to be used but ontop of that formating is CRITICAL. for example `" "$INSTALL_FILE"` NEEDS to be on a new line when in this if statement but doesnt have to outside of it? idk its weird.
-
-# i spent way to much time trying to figure out why or how i can not make the code look weird, but no dice. theres probably a better unix util to use like aek but im a noobie so dont know. again if anyone can improve this im all ears.
-# --------------------
-
 # Make and move the target to the dotfiles directory
 mkdir -p "$DOTFILES_DIR/$MKDIR_PATH" && \
 mv -i "$TARGET" "$DOTFILES_DIR/$MKDIR_PATH" && \
-# find os -> Append the target path to the 'links' section of install.conf.yaml
-{ 
-  OS="$(uname -s)"
-  
-  if [[ "$OS" == "Darwin" ]]; then
-    sed -i '' "/- link:/a\\
-    $CURRENT_DIR/$TARGET_NAME: $RELATIVE_PATH\\
-" "$INSTALL_FILE"
-  elif [[ "$OS" =~ MINGW|CYGWIN|MSYS ]]; then
-    sed -i "/- link:/a\\
-    $CURRENT_DIR/$TARGET_NAME: $RELATIVE_PATH\\" "$INSTALL_FILE"
-  else
-    echo "Unsupported OS: $OS" && exit 1
-  fi
-} || \
+# create symlink path
+yq -i "(.[] | select(.link) | .[].\"$CURRENT_DIR/$TARGET_NAME\") = \"$RELATIVE_PATH\"" "$INSTALL_FILE" || \
 { echo "Error: Please double check the files and OS compatibility."; exit 1; }
-
+# 👆🏼 yq = confusing af...
 
 # Confirmation
 echo ''
@@ -74,8 +53,3 @@ echo "'$TARGET' has been added to 'install.conf.yaml' and moved to '$DOTFILES_DI
 
 # Create symlinks
 dotfiles-sync
-
-
-
-# yq command thats working
-# yq -i '.[1].link.hello2 = "neo"' install.conf.yaml

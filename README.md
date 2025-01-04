@@ -1,3 +1,4 @@
+- [Prerequisites:](#prerequisites)
 - [Windows:](#windows)
   - [1. Clone Dotfiles Repo](#1-clone-dotfiles-repo)
   - [2. CHOCOLATEY](#2-chocolatey)
@@ -8,6 +9,11 @@
   - [7. Explainations](#7-explainations)
 - [Helpful Resources:](#helpful-resources)
 
+
+# Prerequisites:
+
+- dotbot
+- yq
 
 # Windows:
 
