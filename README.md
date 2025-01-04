@@ -8,6 +8,7 @@
   - [6. Install Nerd Fonts](#6-install-nerd-fonts)
   - [7. Explainations](#7-explainations)
 - [Helpful Resources:](#helpful-resources)
+- [TODO:](#todo)
 
 
 # Prerequisites:
@@ -74,3 +75,13 @@ In evalated PS:
   x86_64-unknown-linux-gnu - Linux
 
   for more information see docs: https://wezfurlong.org/wezterm/config/lua/wezterm/target_triple.html?h=windows
+
+
+# TODO:
+
+still a lot to do as im learning bash and terminal.
+
+- [ ] consolodate dotfiles-add and dotfiles-sync into the same script taking args. So instead you use it like a normal cli: i.e. dotfiles add -m file1.lua
+- [ ] change format of yaml yq command so you can choose to specify if a committed dotfile should be MAC/WINDOWS/BOTH (-m -w) specific
+- [ ] change dotfiles-sync name (maybe link?)
+- [ ] add dotfiles pull and dotfiles push to push and pull to remote repo
