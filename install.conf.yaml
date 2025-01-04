@@ -1,12 +1,16 @@
 - defaults:
     link:
       create: true # Automatically create parent directories if they don't exist
-
 - link:
-    ~/twd/config.lua: twd/config.lua
     ~/.config: .config
+    # ~/twd: twd
+    #   if: '[ `uname` = Darwin ]'
 
+    hello: world
+    hello2: neo
 - clean: ["~"]
-
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
+- sample:
+    hello: world
+    hello2: world2

@@ -10,12 +10,10 @@ if [[ "$OS" == "Darwin" ]]; then
     CONFIG="install.conf.yaml"
     echo ''
     echo "MacOS detected using './install.conf.yaml'"
-    echo ''
 elif [[ "$OS" =~ MINGW|CYGWIN|MSYS ]]; then
     CONFIG="windows-install.conf.yaml"
     echo ''
     echo "Windows detected using './windows-install.conf'"
-    echo ''
 else
     echo ''
     echo "Unsupported operating system: $OS"
