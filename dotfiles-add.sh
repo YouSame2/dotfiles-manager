@@ -74,3 +74,8 @@ echo "'$TARGET' has been added to 'install.conf.yaml' and moved to '$DOTFILES_DI
 
 # Create symlinks
 dotfiles-sync
+
+
+
+# yq command thats working
+# yq -i '.[1].link.hello2 = "neo"' install.conf.yaml
