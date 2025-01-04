@@ -1,0 +1,2 @@
+windows:
+choco install yq
