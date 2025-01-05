@@ -6,14 +6,23 @@
 
 export DOTFILES=~/Repos/Personal/dotfiles
 
-alias dotfiles='cd ~/Repos/Personal/dotfiles'
+# alias dotfiles='cd ~/Repos/Personal/dotfiles'
 
-dotfiles-sync() {
+dotfiles-link() {
     $HOME/Repos/Personal/dotfiles/install
 }
-export -f dotfiles-sync
+export -f dotfiles-link
 
-dotfiles-add() {
-    ~/Repos/Personal/dotfiles/dotfiles-add.sh "$@"
+# dotfiles-add() {
+#     ~/Repos/Personal/dotfiles/dotfiles-add.sh "$@"
+# }
+# export -f dotfiles-add
+
+dotfiles() {
+    if [ -z "$1" ]; then
+        cd ~/Repos/Personal/dotfiles
+    else
+        ~/Repos/Personal/dotfiles/dotfiles-add.sh "$@"
+    fi
 }
-export -f dotfiles-add
+export -f dotfiles
