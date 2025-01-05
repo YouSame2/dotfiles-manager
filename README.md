@@ -85,3 +85,6 @@ still a lot to do as im learning bash and terminal.
 - [ ] change format of yaml yq command so you can choose to specify if a committed dotfile should be MAC/WINDOWS/BOTH (-m -w) specific
 - [ ] change dotfiles-sync name (maybe link?)
 - [ ] add dotfiles pull and dotfiles push to push and pull to remote repo
+- [ ] change dotfiles-link function in script and aliases
+- [ ] fix git functionality and test it
+- [ ] add if statements for os specific symlinks
