@@ -2,10 +2,6 @@
 # for Windows only alias -> add to .bashrc
 # for MacOS only alias -> add to .zshrc
 
-# TODO adjust repos dir on windows to match mac
-
-export DOTFILES=~/Documents/Repos/Personal/dotfiles
-
 dotfiles() {
     if [ -z "$1" ]; then
         cd "$DOTFILES"

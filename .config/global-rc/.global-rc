@@ -1,0 +1,5 @@
+# this file contains all shell init scripts that should work on both MacOS and Windows. dont forget to source inside your .zshrc/.bashrc
+# for Windows only -> add to .bashrc
+# for MacOS only -> add to .zshrc
+
+export DOTFILES=~/Documents/Repos/Personal/dotfiles

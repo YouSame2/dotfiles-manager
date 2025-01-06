@@ -11,7 +11,8 @@ if [[ -z "$DOTFILES" ]]; then
     exit 1
 fi
 
-source "$DOTFILES"/.config/aliases/.global-aliases
+source "$DOTFILES"/.config/global-rc/.global-aliases
+source "$DOTFILES"/.config/global-rc/.global-rc
 # CONTRIBUTE: i couldnt find any other way to access my shell functions without sourcing this file. if anyone knows how to allow this subshell script to access .bashrc or .zshrc functions without sourcing let me know!
 
 usage() {
