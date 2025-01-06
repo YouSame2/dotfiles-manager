@@ -52,8 +52,13 @@ if [ "$MODE" == "link" ]; then
 
 elif [[ "$MODE" == "yeet" ]]; then
     GIT_ARGS="$@"
-    cd "$DOTFILES" && git add . && git commit "$GIT_ARGS" && git push
-    exit 0
+    if [[ -z "$GIT_ARGS" ]]; then
+        cd "$DOTFILES" && git add . && git commit '"YEET dotfiles"' && git push
+        exit 0
+    else
+        cd "$DOTFILES" && git add . && git commit "$GIT_ARGS" && git push
+        exit 0
+    fi
 
 elif [[ "$MODE" == "yank" ]]; then
     GIT_ARGS="$@"
