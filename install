@@ -6,7 +6,7 @@ set -e
 OS="$(uname -s)"
 
 # Set the config file based on the OS
-if [[ "$OS" == "Darwin" ]]; then
+if [[ "$OS" == Darwin ]]; then
     CONFIG="install.conf.yaml"
     echo ''
     echo "MacOS detected using './install.conf.yaml'"
