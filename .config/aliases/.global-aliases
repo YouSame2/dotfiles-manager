@@ -4,7 +4,7 @@
 
 # TODO adjust repos dir on windows to match mac
 
-export DOTFILES=~/Documents/Repos/Personal/dotfiles
+export DOTFILES=~/Repos/Personal/dotfiles
 
 dotfiles() {
     if [ -z "$1" ]; then
