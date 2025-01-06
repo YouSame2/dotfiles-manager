@@ -13,14 +13,14 @@ fi
 
 
 # i couldnt find any other way to access my shell functions without sourcing this file. if anyone knows how to allow this subshell script to access .bashrc or .zshrc functions without sourcing let me know!
-source ~/.config/aliases/.universal_aliases
+source ~/.bashrc
 
 usage() {
     echo "Usage: $0 {add|link|push|pull} {-m|-w} [-h]"
-    echo "  {add|link|push|pull}           Set the MODE"
-    echo "  -m                             Set OS_FLAG to 'm'"
-    echo "  -w                             Set OS_FLAG to 'w'"
-    echo "  {-h|--h|--help}                Show this help message"
+    echo "  {add|link|commit|push|yeet|pull}        Set the MODE"
+    echo "  -m                                      Set OS_FLAG to 'm'"
+    echo "  -w                                      Set OS_FLAG to 'w'"
+    echo "  {-h|--h|--help}                         Show this help message"
     exit 1
 }
 
@@ -29,7 +29,7 @@ OS_FLAG="u"
 TARGET=""
 
 case "$1" in
-    add|link|push|pull)
+    add|link|commit|push|yeet|pull)
         MODE=$1
         shift # Remove the first argument after processing. idk this b4
         ;;
@@ -52,12 +52,14 @@ if [ "$MODE" == "link" ]; then
 ##########################
 
 # TODO make sure this git stuff works. i think i will have to change push to commit and then add git push to it
-elif [[ "$MODE" == "push" ]]; then
-    GIT_ARGS=$@
+elif [[ "$MODE" == "yeet" ]]; then
+    GIT_ARGS="$@"
     echo "$GIT_ARGS" # debug
-    cd $DOTFILES && git commit . && git $MODE $GIT_ARGS
+    cd "$DOTFILES" && git commit . "$GIT_ARGS" && git push
     exit 0
-elif [[ "$MODE" == "pull" ]]; then
+
+
+elif [[ "$MODE" == "commit" || "$MODE" == "push" || "$MODE" == "pull" ]]; then
     GIT_ARGS=$@
     echo "$GIT_ARGS" # debug
     cd $DOTFILES && git $MODE $GIT_ARGS
