@@ -15,11 +15,11 @@ source "$DOTFILES"/.config/aliases/.global-aliases
 # CONTRIBUTE: i couldnt find any other way to access my shell functions without sourcing this file. if anyone knows how to allow this subshell script to access .bashrc or .zshrc functions without sourcing let me know!
 
 usage() {
-    echo "Usage: $0 {add|link|yeet} {-m|-w} [-h]"
-    echo "  {add|link|yeet}             Set the MODE"
-    echo "  -m                          Set OS_FLAG to 'm'"
-    echo "  -w                          Set OS_FLAG to 'w'"
-    echo "  {-h|--h|--help}             Show this help message"
+    echo "Usage: $0 {add|link|yeet|yank} {-m|-w} [-h]"
+    echo "  {add|link|yeet|yank}             Set the MODE"
+    echo "  -m                               Set OS_FLAG to 'm'"
+    echo "  -w                               Set OS_FLAG to 'w'"
+    echo "  {-h|--h|--help}                  Show this help message"
     exit 1
 }
 
@@ -28,7 +28,7 @@ OS_FLAG="u"
 TARGET=""
 
 case "$1" in
-    add|link|yeet)
+    add|link|yeet|yank)
         MODE=$1
         shift # Remove the first argument after processing. idk this b4
         ;;
@@ -52,6 +52,11 @@ if [ "$MODE" == "link" ]; then
 elif [[ "$MODE" == "yeet" ]]; then
     GIT_ARGS="$@"
     cd "$DOTFILES" && git add . && git commit "$GIT_ARGS" && git push
+    exit 0
+
+elif [[ "$MODE" == "yank" ]]; then
+    GIT_ARGS="$@"
+    cd "$DOTFILES" && git pull
     exit 0
 
 # decided not to do this... tbh just cd to dir and run git from there
