@@ -1,9 +1,0 @@
-- defaults:
-    link:
-      create: true # Automatically create parent directories if they don't exist
-- link:
-    ~/.config:
-      path: .config
-# - clean: ["~"]
-# - shell:
-#     - [git submodule update --init --recursive, Installing submodules]

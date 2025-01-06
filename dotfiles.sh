@@ -116,7 +116,7 @@ elif [[ "$MODE" == "add" ]]; then
     CURRENT_DIR=$(dirs)
 
     # TODO change install file 
-    INSTALL_FILE="$DOTFILES/windows-install.conf.yaml"
+    INSTALL_FILE="$DOTFILES/install.conf.yaml"
 
     TARGET_PATH=$(realpath "$TARGET")
     TARGET_NAME=$(basename "$TARGET")

@@ -3,10 +3,6 @@
       create: true # Automatically create parent directories if they don't exist
 - link:
     ~/.config: .config
-    # ~/twd: twd
-
-    ~/twd: twd
 - clean: ["~"]
-  #   if: '[ `uname` = Darwin ]'
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
