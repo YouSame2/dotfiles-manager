@@ -4,8 +4,9 @@
 - link:
     ~/.config: .config
     # ~/twd: twd
-    #   if: '[ `uname` = Darwin ]'
 
+    ~/twd: twd
 - clean: ["~"]
+  #   if: '[ `uname` = Darwin ]'
 - shell:
     - [git submodule update --init --recursive, Installing submodules]

@@ -1,12 +1,9 @@
 - defaults:
     link:
       create: true # Automatically create parent directories if they don't exist
-
 - link:
-    ~/twd: twd
-    ~/.config: .config
-
-- clean: ["~"]
-
-- shell:
-    - [git submodule update --init --recursive, Installing submodules]
+    ~/.config:
+      path: .config
+# - clean: ["~"]
+# - shell:
+#     - [git submodule update --init --recursive, Installing submodules]

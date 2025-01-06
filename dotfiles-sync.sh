@@ -1,1 +1,0 @@
-# blank script im only putting this here so you know this function exists in ./.config/aliases/universal_aliases.sh

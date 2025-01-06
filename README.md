@@ -81,10 +81,10 @@ In evalated PS:
 
 still a lot to do as im learning bash and terminal.
 
-- [ ] consolodate dotfiles-add and dotfiles-sync into the same script taking args. So instead you use it like a normal cli: i.e. dotfiles add -m file1.lua
-- [ ] change format of yaml yq command so you can choose to specify if a committed dotfile should be MAC/WINDOWS/BOTH (-m -w) specific
-- [ ] change dotfiles-sync name (maybe link?)
+- [x] consolodate dotfiles-add and dotfiles-sync into the same script taking args. So instead you use it like a normal cli: i.e. dotfiles add -m file1.lua
+- [x] change format of yaml yq command so you can choose to specify if a committed dotfile should be MAC/WINDOWS/BOTH (-m -w) specific
+- [x] change dotfiles-sync name (maybe link?)
 - [ ] add dotfiles pull and dotfiles push to push and pull to remote repo
-- [ ] change dotfiles-link function in script and aliases
+- [x] change dotfiles-link function in script and aliases
 - [ ] fix git functionality and test it
-- [ ] add if statements for os specific symlinks
+- [x] add if statements for os specific symlinks

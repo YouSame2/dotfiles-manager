@@ -22,7 +22,7 @@ dotfiles() {
     if [ -z "$1" ]; then
         cd "$DOTFILES"
     else
-        "$DOTFILES"/dotfiles-add.sh "$@"
+        "$DOTFILES"/dotfiles.sh "$@"
     fi
 }
 export -f dotfiles
