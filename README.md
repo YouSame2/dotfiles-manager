@@ -84,7 +84,6 @@ still a lot to do as im learning bash and terminal.
 - [x] consolodate dotfiles-add and dotfiles-sync into the same script taking args. So instead you use it like a normal cli: i.e. dotfiles add -m file1.lua
 - [x] change format of yaml yq command so you can choose to specify if a committed dotfile should be MAC/WINDOWS/BOTH (-m -w) specific
 - [x] change dotfiles-sync name (maybe link?)
-- [ ] add dotfiles pull and dotfiles push to push and pull to remote repo
 - [x] change dotfiles-link function in script and aliases
-- [ ] fix git functionality and test it
+- [x] fix git functionality and test it
 - [x] add if statements for os specific symlinks
