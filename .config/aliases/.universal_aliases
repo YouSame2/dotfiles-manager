@@ -4,12 +4,12 @@
 
 # TODO adjust repos dir on windows to match mac
 
-export DOTFILES=~/Repos/Personal/dotfiles
+export DOTFILES=~/Documents/Repos/Personal/dotfiles
 
 # alias dotfiles='cd ~/Repos/Personal/dotfiles'
 
 dotfiles-link() {
-    $HOME/Repos/Personal/dotfiles/install
+    "$DOTFILES"/install
 }
 export -f dotfiles-link
 
@@ -20,9 +20,9 @@ export -f dotfiles-link
 
 dotfiles() {
     if [ -z "$1" ]; then
-        cd ~/Repos/Personal/dotfiles
+        cd "$DOTFILES"
     else
-        ~/Repos/Personal/dotfiles/dotfiles-add.sh "$@"
+        "$DOTFILES"/dotfiles-add.sh "$@"
     fi
 }
 export -f dotfiles
