@@ -6,18 +6,6 @@
 
 export DOTFILES=~/Documents/Repos/Personal/dotfiles
 
-# alias dotfiles='cd ~/Repos/Personal/dotfiles'
-
-dotfiles-link() {
-    "$DOTFILES"/install
-}
-export -f dotfiles-link
-
-# dotfiles-add() {
-#     ~/Repos/Personal/dotfiles/dotfiles-add.sh "$@"
-# }
-# export -f dotfiles-add
-
 dotfiles() {
     if [ -z "$1" ]; then
         cd "$DOTFILES"

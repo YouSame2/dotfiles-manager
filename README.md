@@ -87,3 +87,4 @@ still a lot to do as im learning bash and terminal.
 - [x] change dotfiles-link function in script and aliases
 - [x] fix git functionality and test it
 - [x] add if statements for os specific symlinks
+- [ ] when adding file/folder with no OS_FLAG (i.e. 'dotfiles add .config') in 'install.conf.yaml', if that file/folder already had an if statement the if statement wont get removed. this can lead so some unexpected behavior in rare situations. Im probably not going to deal with it since its niche, but feel free for a simple contribution if u want.

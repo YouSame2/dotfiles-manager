@@ -11,16 +11,15 @@ if [[ -z "$DOTFILES" ]]; then
     exit 1
 fi
 
-
-# i couldnt find any other way to access my shell functions without sourcing this file. if anyone knows how to allow this subshell script to access .bashrc or .zshrc functions without sourcing let me know!
-source "$DOTFILES"/.config/aliases/.universal_aliases
+source "$DOTFILES"/.config/aliases/.global-aliases
+# CONTRIBUTE: i couldnt find any other way to access my shell functions without sourcing this file. if anyone knows how to allow this subshell script to access .bashrc or .zshrc functions without sourcing let me know!
 
 usage() {
-    echo "Usage: $0 {add|link|push|pull} {-m|-w} [-h]"
-    echo "  {add|link|commit|push|yeet|pull}        Set the MODE"
-    echo "  -m                                      Set OS_FLAG to 'm'"
-    echo "  -w                                      Set OS_FLAG to 'w'"
-    echo "  {-h|--h|--help}                         Show this help message"
+    echo "Usage: $0 {add|link|yeet} {-m|-w} [-h]"
+    echo "  {add|link|yeet}             Set the MODE"
+    echo "  -m                          Set OS_FLAG to 'm'"
+    echo "  -w                          Set OS_FLAG to 'w'"
+    echo "  {-h|--h|--help}             Show this help message"
     exit 1
 }
 
@@ -29,7 +28,7 @@ OS_FLAG="u"
 TARGET=""
 
 case "$1" in
-    add|link|commit|push|yeet|pull)
+    add|link|yeet)
         MODE=$1
         shift # Remove the first argument after processing. idk this b4
         ;;
@@ -43,7 +42,7 @@ esac
 ##########################
 
 if [ "$MODE" == "link" ]; then
-    dotfiles-link
+    "$DOTFILES"/install
     exit 0
 
 ##########################
@@ -108,12 +107,8 @@ elif [[ "$MODE" == "add" ]]; then
     exit 1
     fi
 
-    # DOTFILES_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
     CURRENT_DIR=$(dirs)
-
-    # TODO change install file 
     INSTALL_FILE="$DOTFILES/install.conf.yaml"
-
     TARGET_PATH=$(realpath "$TARGET")
     TARGET_NAME=$(basename "$TARGET")
 
@@ -123,17 +118,17 @@ elif [[ "$MODE" == "add" ]]; then
     RELATIVE_PATH=$MKDIR_PATH/$TARGET
     RELATIVE_PATH="${RELATIVE_PATH#/}"
 
-
     # Check if the provided argument is valid
     if [ ! -e "$TARGET_PATH" ]; then
     echo "Error: '$TARGET_PATH' does not exist."
     exit 1
     fi
 
-    # # Make and move the target to the dotfiles directory
-    # mkdir -p "$DOTFILES/$MKDIR_PATH" && \
-    # mv -i "$TARGET" "$DOTFILES/$MKDIR_PATH" && \
-    # # add path to config
+    # Make and move the target to the dotfiles directory
+    mkdir -p "$DOTFILES/$MKDIR_PATH" && \
+    mv -i "$TARGET" "$DOTFILES/$MKDIR_PATH" && \
+    
+    # add path to config
     yq -i "(.[] | select(.link) | .[].\"$CURRENT_DIR/$TARGET_NAME\".path) = \"$RELATIVE_PATH\"" "$INSTALL_FILE" || \
     { echo "Error: Please double check the files and OS compatibility."; exit 1; }
     # 👆🏼 yq = confusing af...
@@ -145,6 +140,7 @@ elif [[ "$MODE" == "add" ]]; then
 
     elif [[ $OS_FLAG == "m" ]]; then
         yq -i "(.[] | select(.link) | .[].\"$CURRENT_DIR/$TARGET_NAME\".if) = \"[ \`uname\` = Darwin ]\"" "$INSTALL_FILE"
+        # CONTRIBUTE: when adding file/folder with no OS_FLAG (i.e. 'dotfiles add .config') in 'install.conf.yaml', if that file/folder already had an if statement the if statement wont get removed. this can lead so some unexpected behavior in rare situations. Im probably not going to deal with it since its niche, but feel free for a simple contribution if u want.
     fi
 
     # Confirmation
@@ -152,6 +148,6 @@ elif [[ "$MODE" == "add" ]]; then
     echo "'$TARGET' has been added to 'install.conf.yaml' and moved to '$DOTFILES/$MKDIR_PATH'."
 
     # Create symlinks
-    dotfiles-link
+    "$DOTFILES"/install
     exit 0
 fi
