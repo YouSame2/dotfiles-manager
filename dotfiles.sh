@@ -13,7 +13,7 @@ fi
 
 
 # i couldnt find any other way to access my shell functions without sourcing this file. if anyone knows how to allow this subshell script to access .bashrc or .zshrc functions without sourcing let me know!
-source ~/.bashrc
+source "$DOTFILES"/.config/aliases/.universal_aliases
 
 usage() {
     echo "Usage: $0 {add|link|push|pull} {-m|-w} [-h]"
@@ -43,7 +43,6 @@ esac
 ##########################
 
 if [ "$MODE" == "link" ]; then
-    echo "link MODE selected" # debug
     dotfiles-link
     exit 0
 
@@ -53,14 +52,12 @@ if [ "$MODE" == "link" ]; then
 
 elif [[ "$MODE" == "yeet" ]]; then
     GIT_ARGS="$@"
-    echo "$GIT_ARGS" # debug
     cd "$DOTFILES" && git add . && git commit "$GIT_ARGS" && git push
     exit 0
 
 # decided not to do this... tbh just cd to dir and run git from there
 # elif [[ "$MODE" == "commit" || "$MODE" == "push" || "$MODE" == "pull" ]]; then
 #     GIT_ARGS="$@"
-#     echo "$GIT_ARGS" # debug
 #     cd "$DOTFILES" && git "$MODE" "$GIT_ARGS"
 #     exit 0
 
@@ -98,8 +95,6 @@ elif [[ "$MODE" == "add" ]]; then
                 ;;
         esac
     done
-
-    echo "Add MODE selected" # debug
 
     # ensure file provided
     if [ -z "$TARGET" ]; then
@@ -160,20 +155,3 @@ elif [[ "$MODE" == "add" ]]; then
     dotfiles-link
     exit 0
 fi
-
-
-
-
-
-
-
-
-
-
-# if [ "$OS_FLAG" == "m" ]; then
-#     echo "Operating system set to 'm'" # debug
-#     # Logic for OS_FLAG 'm' here
-# elif [ "$OS_FLAG" == "w" ]; then
-#     echo "Operating system set to 'w'" # debug
-#     # Logic for OS_FLAG 'w' here
-# fi
