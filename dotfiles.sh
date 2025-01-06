@@ -51,19 +51,18 @@ if [ "$MODE" == "link" ]; then
 # git functionality
 ##########################
 
-# TODO make sure this git stuff works. i think i will have to change push to commit and then add git push to it
 elif [[ "$MODE" == "yeet" ]]; then
     GIT_ARGS="$@"
     echo "$GIT_ARGS" # debug
-    cd "$DOTFILES" && git commit . "$GIT_ARGS" && git push
+    cd "$DOTFILES" && git add . && git commit "$GIT_ARGS" && git push
     exit 0
 
-
-elif [[ "$MODE" == "commit" || "$MODE" == "push" || "$MODE" == "pull" ]]; then
-    GIT_ARGS=$@
-    echo "$GIT_ARGS" # debug
-    cd $DOTFILES && git $MODE $GIT_ARGS
-    exit 0
+# decided not to do this... tbh just cd to dir and run git from there
+# elif [[ "$MODE" == "commit" || "$MODE" == "push" || "$MODE" == "pull" ]]; then
+#     GIT_ARGS="$@"
+#     echo "$GIT_ARGS" # debug
+#     cd "$DOTFILES" && git "$MODE" "$GIT_ARGS"
+#     exit 0
 
 ##########################
 # add functionality
