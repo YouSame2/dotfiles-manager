@@ -1,0 +1,8 @@
+tap "felixkratz/formulae"
+tap "homebrew/bundle"
+tap "nikitabobko/tap"
+brew "node"
+brew "yq"
+brew "felixkratz/formulae/borders"
+cask "aerospace"
+cask "wezterm"
