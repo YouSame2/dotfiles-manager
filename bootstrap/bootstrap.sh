@@ -49,6 +49,9 @@ if [[ "$OS" = Darwin ]]; then
         echo "Successfully installed: Homebrew" || \
         { echo "Error installing homebrew, please install manually"; exit 1; }
         echo ''
+
+    else
+        echo "Homebrew (brew) already installed, yippie!"
     fi
 
     # Check if Homebrew Bundle is installed
@@ -81,7 +84,7 @@ elif [[ "$OS" =~ Cygwin|Msys|MinGW ]]; then
         echo "Chocolatey (choco) is not installed. Installing choco is a bit more complicated so please install Chocolatey first."
         exit 1
     else
-        echo "Chocolatey (choco) already installed yippie!"
+        echo "Chocolatey (choco) already installed, yippie!"
     fi
 
     # Check if choco export file exists
