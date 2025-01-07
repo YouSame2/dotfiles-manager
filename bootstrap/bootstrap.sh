@@ -38,19 +38,24 @@ install_fonts() {
 ####################
 
 if [[ "$OS" = Darwin ]]; then
-    # macOS setup
+    echo ""
     echo "macOS detected."
 
     # Check if Homebrew is installed
     if ! command -v brew &>/dev/null; then
-        echo "Homebrew is not installed. Please install Homebrew first."
-        exit 1
+        echo "Homebrew is not installed. Installing Homebrew..."
+
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" && \
+        echo "Successfully installed: Homebrew" || \
+        { echo "Error installing homebrew, please install manually"; exit 1; }
+        echo ''
     fi
 
     # Check if Homebrew Bundle is installed
     if ! brew tap | grep -q "Homebrew/bundle"; then
         echo "Homebrew bundle tap not found. Installing Homebrew bundle..."
         brew tap Homebrew/bundle
+        echo ''
     fi
 
     # Check for Brewfile
