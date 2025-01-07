@@ -65,7 +65,7 @@ if [[ "$OS" = Darwin ]]; then
     if [ -f "./mac/Brewfile" ]; then
         echo "Found Brewfile. Installing packages..."
         cd ./mac
-        brew bundle
+        brew bundle -v
     else
         echo "Brewfile not found in './mac/'. Please provide a Brewfile."
         exit 1
