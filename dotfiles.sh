@@ -18,13 +18,33 @@ source "$DOTFILES"/.config/global-rc/.global-rc
 # CONTRIBUTE: i couldnt find any other way to access my shell functions without sourcing this file. if anyone knows how to allow this subshell script to access .bashrc or .zshrc functions without sourcing let me know!
 
 usage() {
-    echo "Usage: $0 {add|link|yeet|yank} {-m|-w} [-h]"
-    echo "  {add|link|yeet|yank}             Set the MODE"
-    echo "  -m                               Set OS_FLAG to 'm'"
-    echo "  -w                               Set OS_FLAG to 'w'"
-    echo "  {-h|--h|--help}                  Show this help message"
+    echo "Usage: dotfiles <command> [options] <target>"
+    echo ""
+    echo "Commands:"
+    echo "  add             Add a file or directory to the dotfiles repository and configure it for symlinking."
+    echo "  link            Rerun the dotbot configuration to ensure all symlinks are created or updated."
+    echo "  yeet            Add all changes in the dotfiles directory, commit them, and push to the remote repository."
+    echo "                  If no commit message is provided, defaults to 'YEET dotfiles'."
+    echo "  yank            Pull the latest changes from the remote dotfiles repository."
+    echo ""
+    echo "Options for 'add':"
+    echo "  -m              Set the target symlink to apply only on macOS."
+    echo "  -w              Set the target symlink to apply only on Windows."
+    echo ""
+    echo "General Options:"
+    echo "  -h, --help      Display this help message."
+    echo ""
+    echo "Examples:"
+    echo "  dotfiles add config.lua          Add 'my_config' and configure it for all platforms."
+    echo "  dotfiles add -m config.lua       Add 'my_config' and configure it for macOS only."
+    echo "  dotfiles add -w config.lua       Add 'my_config' and configure it for Windows only."
+    echo "  dotfiles link                   Ensure all symlinks are created or updated."
+    echo "  dotfiles yeet                   Commit all changes with the default message and push."
+    echo "  dotfiles yeet -m 'Fix issue'    Commit all changes with a custom message and push."
+    echo "  dotfiles yank                   Pull the latest changes from the remote repository."
     exit 1
 }
+
 
 MODE=""
 OS_FLAG="u"
