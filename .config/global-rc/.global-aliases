@@ -2,6 +2,23 @@
 # for Windows only alias -> add to .bashrc
 # for MacOS only alias -> add to .zshrc
 
+###################
+# aliases
+###################
+
+# Changing "ls" to "eza"
+# 👇🏽 defaults for all eza/ls commands
+alias ls='eza --color=always --icons=always --group-directories-first --hyperlink --ignore-glob="ntuser.*|NTUSER.*"'
+alias la='eza -a --color=always --icons=always --group-directories-first --hyperlink --time-style=iso --ignore-glob="ntuser.*|NTUSER.*"'
+alias ll='eza -lh --color=always --icons=always --group-directories-first --hyperlink --time-style=iso --ignore-glob="ntuser.*|NTUSER.*"'
+alias lla='eza -alh --color=always --icons=always --group-directories-first --hyperlink --time-style=iso --ignore-glob="ntuser.*|NTUSER.*"'
+alias lt='eza -aTh --color=always --icons=always --group-directories-first --hyperlink --time-style=iso --ignore-glob="ntuser.*|NTUSER.*"'
+
+
+###################
+# functions
+###################
+
 dotfiles() {
     if [ -z "$1" ]; then
         cd "$DOTFILES"
