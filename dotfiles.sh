@@ -6,6 +6,8 @@ set -e
 # init
 ##########################
 
+# TODO: add sync (running bootstrap.sh) and upgrade command (upgrade via each package manager)
+
 if [[ -z "$DOTFILES" ]]; then
     echo "Dotfiles alias is not set please set and rerun script"
     exit 1
