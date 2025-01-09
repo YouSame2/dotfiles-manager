@@ -9,17 +9,30 @@ OS=$(uname -o)
 # FONTS
 ####################
 
+# i noooo... nested if statment wholesale. dont feel like refactoring. bite me!
 install_fonts() {
     if [ -d "./fonts" ]; then
         echo "------- Installing fonts from './fonts' directory..."
         for font in ./fonts/*; do
             if [ -f "$font" ]; then
+
+                # windows part
                 if [[ "$OS" =~ Cygwin|Msys|MinGW ]]; then
-                    cp "$font" 'C:/Windows/Fonts/' && \
-                    echo "Successfully installed: $font" || echo "Failed to install: $font"
+                    if [[ ! -f "C:/Windows/Fonts/$(basename "$font")" ]]; then
+                        cp "$font" 'C:/Windows/Fonts/' && \
+                        echo "Successfully installed: $font" || echo "Failed to install: $font"
+                    else
+                        echo "Already installed ➡ ($(basename "$font"))"
+                    fi
+                    
+                # mac part
                 elif [[ "$OS" = Darwin ]]; then
-                    cp "$font" ~/Library/Fonts/ && \
-                    echo "Successfully installed: $font" || echo "Failed to install: $font"
+                    if [[ ! -f "$HOME/Library/Fonts/$(basename "$font")" ]]; then
+                        cp "$font" ~/Library/Fonts/ && \
+                        echo "Successfully installed: $font" || echo "Failed to install: $font"
+                    else
+                        echo "Already installed ➡ ($(basename "$font"))"
+                    fi
                 else
                     echo "Unsupported OS detected: $OS"
                     exit 1
@@ -31,7 +44,7 @@ install_fonts() {
     fi
 }
 
-# install_fonts # Run before stuff
+install_fonts # Run before stuff
 
 ####################
 # MAC
@@ -74,6 +87,8 @@ if [[ "$OS" = Darwin ]]; then
 ####################
 # WINDOWS
 ####################
+
+# TODO: add winget and its packages to bootstrap (eza)
 
 elif [[ "$OS" =~ Cygwin|Msys|MinGW ]]; then
     echo ""
