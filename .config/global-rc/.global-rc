@@ -7,8 +7,9 @@
 # exports
 ###################
 
-export DOTFILES=~/Repos/Personal/dotfiles
- 
+export DOTFILES=~/Documents/Repos/Personal/dotfiles
+
+
 ###################
 # ULTIMATE FZF SETUP!
 ###################
@@ -51,3 +52,16 @@ _fzf_comprun() {
 ###################
 # keybindings
 ###################
+
+
+
+
+# # add this to my mac:
+# # share history across multiple zsh sessions
+# setopt SHARE_HISTORY
+# # append to history
+# setopt APPEND_HISTORY
+# # expire duplicates first
+# setopt HIST_EXPIRE_DUPS_FIRST 
+# # removes blank lines from history
+# setopt HIST_REDUCE_BLANKS

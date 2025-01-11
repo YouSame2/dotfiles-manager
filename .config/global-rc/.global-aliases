@@ -26,4 +26,3 @@ dotfiles() {
         "$DOTFILES"/dotfiles.sh "$@"
     fi
 }
-export -f dotfiles
