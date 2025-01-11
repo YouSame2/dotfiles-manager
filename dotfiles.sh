@@ -6,6 +6,8 @@ set -e
 # init
 ##########################
 
+# TODO: add check for elevated privileges. my god this pissed me off...
+
 # TODO: add sync (running bootstrap.sh) and upgrade command (upgrade via each package manager)
 
 if [[ -z "$DOTFILES" ]]; then
