@@ -12,7 +12,7 @@ alias ls='eza --color=always --icons=always --group-directories-first --hyperlin
 alias la='eza -a --color=always --icons=always --group-directories-first --hyperlink --time-style=iso --ignore-glob="ntuser.*|NTUSER.*"'
 alias ll='eza -lh --color=always --icons=always --group-directories-first --hyperlink --time-style=iso --ignore-glob="ntuser.*|NTUSER.*"'
 alias lla='eza -alh --color=always --icons=always --group-directories-first --hyperlink --time-style=iso --ignore-glob="ntuser.*|NTUSER.*"'
-alias lt='eza -aTh --color=always --icons=always --group-directories-first --hyperlink --time-style=iso --ignore-glob="ntuser.*|NTUSER.*"'
+alias lt='eza -aTh -L 1 --color=always --icons=always --group-directories-first --hyperlink --time-style=iso --ignore-glob="ntuser.*|NTUSER.*"'
 
 
 ###################
