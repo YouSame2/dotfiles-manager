@@ -27,8 +27,70 @@ dotfiles() {
     fi
 }
 export -f dotfiles
+ 
 
+###################
 # FZF
+###################
+
+# options for all fzf windows
+export FZF_DEFAULT_OPTS='--info inline-right --border-label "| NVIM btw |" --height=~75% --reverse --info inline-right --border=rounded --pointer="→" --margin 1'
+
+# replacing default completion for path (i.e. ls cp rm) and dir (i.e. cd)
+_fzf_compgen_path() {
+  fd --hidden --ignore-case --follow "$1"
+}
+_fzf_compgen_dir() {
+  fd --type d --hidden --ignore-case --follow "$1"
+}
+
+# # fzf will use this default command if and only if you don’t give any input.
+# RG_GLOBS="--iglob '!.git/' --iglob '!professional/' --iglob '!*request-github/' --iglob '!ntuser*'"
+# # read this for glob 👉🏽 https://git-scm.com/docs/gitignore
+# export FZF_DEFAULT_COMMAND="rg --hidden --follow  --files $RG_GLOBS"
+
+# # Options to fzf command. im assuming these are for the find command
+# # export FZF_COMPLETION_OPTS=''
+# # Options for path completion (e.g. vim **<TAB>)
+# export FZF_COMPLETION_PATH_OPTS='--walker file,dir,follow,hidden'
+# # Options for directory completion (e.g. cd **<TAB>)
+# export FZF_COMPLETION_DIR_OPTS='--walker dir,follow'
+# # Advanced customization of fzf options via _fzf_comprun function
+# # - The first argument to the function is the name of the command.
+# # - You should make sure to pass the rest of the arguments ($@) to fzf.
+
+# # changing default CTRL-* commands
+# export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+# export FZF_ALT_C_COMMAND="find . type d"
+# export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
+
+_fzf_comprun() {
+  local command=$1
+  shift
+
+  case "$command" in
+    nvim|vim|nano|code) fzf --preview "bat -n --color=always {}"   "$@" ;;
+    export|unset)       fzf --preview "eval 'echo \$'{}"           "$@" ;;
+    *)                  fzf                                        "$@" ;;
+  esac
+}
+
+# _fzf_compgen_path() {
+#   echo "$1"
+#   command find -L "$1" \
+#     -name .git -prune -o -name .bash -prune -o -name .hg -prune -o -name .svn -prune -o \( -type d -o -type f -o -type l \) \
+#     -a -not -path "$1" -print 2> /dev/null | command sed 's@^\./@@'
+# }
+
+# _fzf_compgen_dir() {
+#   command find -L "$1" \
+#     -name .git -prune -o -name .hg -prune -o -name .svn -prune -o -type d \
+#     -a -not -path "$1" -print 2> /dev/null | command sed 's@^\./@@'
+# }
+
+# these work ☝🏽 https://github.com/junegunn/fzf/issues/800
+
 # git commit browser
 # fshow() {
 #   git log --graph --color=always \
@@ -42,3 +104,20 @@ export -f dotfiles
 # }
 
 # more cool funcitons 👉🏽 https://github.com/junegunn/fzf/wiki/examples
+
+# # add to mac 
+# function brew() {
+#   if [[ $1 == "install" ]]; then
+#     shift
+#     command choco --version
+#     echo hello world
+#     # # Install the package
+#     # command brew install "$@"
+#     # # Update the global Brewfile
+#     # command brew bundle dump --global --force
+#   else
+#     # Call the original brew command with all original arguments
+#     command choco "$@"
+#   fi
+# }
+# export -f brew
