@@ -2,4 +2,52 @@
 # for Windows only -> add to .bashrc
 # for MacOS only -> add to .zshrc
 
-export DOTFILES=~/Documents/Repos/Personal/dotfiles
+
+###################
+# exports
+###################
+
+export DOTFILES=~/Repos/Personal/dotfiles
+ 
+###################
+# ULTIMATE FZF SETUP!
+###################
+
+# the whole point of this is to enable ignored files from popping up in fzf and anything that uses it. for example i have a professional folder i dont want to accidentally show when fuzzy finding. stock 'find' command is cumbersome, so i spent 2 days fiddling with other apps to get it to work.
+
+# in the end i settled on using fd which by default ignores any thing thats mentioned in .gitignore and for other specific things you can add to a ignore file (note: that file is case-sensitive unlike windows git). more info 👉🏽 https://github.com/sharkdp/fd?tab=readme-ov-file#excluding-specific-files-or-directories
+
+# fzf defaults (i.e. just running fzf in terminal)
+export FZF_DEFAULT_COMMAND="fd --hidden --ignore-case --follow"
+# options for all fzf windows
+export FZF_DEFAULT_OPTS='--info inline-right --border-label "| NVIM btw |" --height=40% --reverse --info inline-right --border=rounded --pointer="→" --marker="✔" --margin 1'
+# Options for completion mode.
+export FZF_COMPLETION_OPTS='--border-label "| COMPLETION MODE - NVIM btw |"'
+# changing default CTRL-* commands
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND --type dir"
+
+# replacing default completion for path (i.e. ls ** TAB) & dir (i.e. cd ** TAB)
+_fzf_compgen_path() {
+  fd --hidden --ignore-case --follow "$1"
+}
+_fzf_compgen_dir() {
+  fd --type dir --hidden --ignore-case --follow "$1"
+}
+
+# add options for specific commands here 👇🏽 like nvim ** TAB
+_fzf_comprun() {
+  local command=$1
+  shift
+
+  case "$command" in
+    nvim|vim|nano|code) fzf --preview "bat -n --color=always {}"   "$@" ;;
+    export|unset)       fzf --preview "eval 'echo \$'{}"           "$@" ;;
+    *)                  fzf                                        "$@" ;;
+  esac
+}
+
+
+###################
+# keybindings
+###################
