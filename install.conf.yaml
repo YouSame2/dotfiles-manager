@@ -2,7 +2,13 @@
     link:
       create: true # Automatically create parent directories if they don't exist
 - link:
+    # for reference format is DESTINATION: path: SOURCE (dotfiles dir)
     ~/.config: .config
+    ~/AppData/Roaming/fd:
+      path: AppData/Roaming/fd
+      if: "[ `uname` != Darwin ]"
+    ~/.config/fd: # this 👈🏽 is for mac but i also like it in win
+      path: AppData/Roaming/fd
 - clean: ["~"]
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
