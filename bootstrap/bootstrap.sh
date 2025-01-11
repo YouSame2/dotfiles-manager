@@ -11,9 +11,9 @@ OS=$(uname -o)
 
 # i noooo... nested if statment wholesale. dont feel like refactoring. bite me!
 install_fonts() {
-    if [ -d "./fonts" ]; then
-        echo "------- Installing fonts from './fonts' directory..."
-        for font in ./fonts/*; do
+    if [ -d "$DOTFILES/bootstrap/fonts" ]; then
+        echo "------- Installing fonts from $DOTFILES/bootstrap/fonts directory..."
+        for font in $DOTFILES/bootstrap/fonts/*; do
             if [ -f "$font" ]; then
 
                 # windows part
@@ -40,7 +40,7 @@ install_fonts() {
             fi
         done
     else
-        echo "Fonts directory './fonts' not found or no fonts. Skipping font installation."
+        echo "Fonts directory $DOTFILES/bootstrap/fonts not found or no fonts. Skipping font installation."
     fi
 }
 
@@ -75,12 +75,12 @@ if [[ "$OS" = Darwin ]]; then
     fi
 
     # Check for Brewfile
-    if [ -f "./mac/Brewfile" ]; then
+    if [ -f "$DOTFILES/bootstrap/mac/Brewfile" ]; then
         echo "Found Brewfile. Installing packages..."
-        cd ./mac
+        cd $DOTFILES/bootstrap/mac
         brew bundle -v
     else
-        echo "Brewfile not found in './mac/'. Please provide a Brewfile."
+        echo "Brewfile not found in $DOTFILES/bootstrap/mac/. Please provide a Brewfile."
         exit 1
     fi
 
@@ -103,11 +103,11 @@ elif [[ "$OS" =~ Cygwin|Msys|MinGW ]]; then
     fi
 
     # Check if choco export file exists
-    if [ -f "./windows/packages.config" ]; then
+    if [ -f "$DOTFILES/bootstrap/windows/packages.config" ]; then
         echo "Found packages.config. Installing packages..."
-        choco install ./windows/packages.config
+        choco install $DOTFILES/bootstrap/windows/packages.config
     else
-        echo "packages.config not found in './windows/'. Please provide a valid choco export file. choco export [<options/switches>]"
+        echo "packages.config not found in $DOTFILES/bootstrap/windows/. Please provide a valid choco export file. choco export [<options/switches>]"
         echo "see choco docs for export command"
         exit 1
     fi
