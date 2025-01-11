@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<packages>
+  <package id="chocolatey" />
+  <package id="wezterm" />
+  <package id="wezterm.install" />
+  <package id="yq" />
+  <package id="fzf" />
+  <package id="bat" />
+  <package id="ripgrep" />
+</packages>
