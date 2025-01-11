@@ -7,7 +7,7 @@
 ###################
 
 # Changing "ls" to "eza"
-# 👇🏽 defaults for all eza/ls commands
+# 👇🏽 defaults for all eza/ls commands. ntuser= windows crit files= annoying af
 alias ls='eza --color=always --icons=always --group-directories-first --hyperlink --ignore-glob="ntuser.*|NTUSER.*"'
 alias la='eza -a --color=always --icons=always --group-directories-first --hyperlink --time-style=iso --ignore-glob="ntuser.*|NTUSER.*"'
 alias ll='eza -lh --color=always --icons=always --group-directories-first --hyperlink --time-style=iso --ignore-glob="ntuser.*|NTUSER.*"'

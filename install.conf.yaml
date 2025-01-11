@@ -7,8 +7,10 @@
     ~/AppData/Roaming/fd:
       path: AppData/Roaming/fd
       if: "[ `uname` != Darwin ]"
-    ~/.config/fd: # this 👈🏽 is for mac but i also like it in win
+    ~/.config/fd: # this is for mac but i also like it in win
       path: AppData/Roaming/fd
+    ~/.bashrc:
+      path: .bashrc
 - clean: ["~"]
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
