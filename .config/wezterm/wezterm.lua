@@ -9,7 +9,7 @@ wezterm.gui.enumerate_gpus()
 config.font = wezterm.font("Hack Nerd Font Mono")
 config.font_size = 14
 
-config.color_scheme = 'Catppuccin Macchiato (Gogh)'
+config.color_scheme = 'Tokyo Night'
 
 config.window_decorations = "RESIZE"
 config.hide_tab_bar_if_only_one_tab = true
@@ -44,3 +44,8 @@ if wezterm.target_triple == 'x86_64-pc-windows-msvc' then
     
 end
 return config
+
+
+-- OTHER GOOD THEMES:
+-- Tokyo Night
+-- Catppuccin Macchiato (Gogh)

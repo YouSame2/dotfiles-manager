@@ -7,6 +7,8 @@ source ~/.config/global-rc/.global-rc
 # inits
 ###################
 
+export STARSHIP_CONFIG=~/.config/starship/starship-bash.toml
+
 export HISTCONTROL=ignoredups:erasedups # no duplicate entries
 export HISTSIZE=1000
 export HISTFILESIZE=999
@@ -14,6 +16,7 @@ shopt -s histappend # do not overwrite history
 
 # Set up fzf key bindings and fuzzy completion
 eval "$(fzf --bash)"
+eval "$(starship init bash)"
 
 
 ###################
@@ -30,19 +33,25 @@ alias functions='declare -F'
 ####################
 # binds
 ####################
+# these override any imports/evals from above
 
-# set above other keybindings to prevent overwriting
-# testing vim bindings
+# enable vim bindings w/ visual mode indicator. make sure disable $character in starship.toml or use diff config like i do
 set -o vi
+bind 'set show-mode-in-prompt on'
+bind 'set vi-cmd-mode-string \1\e[33;1m\2╰❯ \1\e[0m\2'
+bind 'set vi-ins-mode-string \1\e[34;1m\2╰❯ \1\e[0m\2'
+# bind 'set vi-cmd-mode-string "[N]"'
+# bind 'set vi-ins-mode-string "[I]"'
+# bind 'set vi-ins-mode-string \1\e[34;1m\2└──[INS] \1\e[0m\2'
+# bind 'set vi-cmd-mode-string \1\e[33;1m\2└──[CMD] \1\e[0m\2'
+
+bind -m vi-command 'Control-l: clear-screen'
+bind -m vi-insert 'Control-l: clear-screen'
 
 # bind 'set show-all-if-ambiguous on' # if you prefer list of options
 bind 'TAB:menu-complete'
 bind '"\e[Z":menu-complete-backward'
-#ignore upper and lowercase when TAB completion
-bind "set completion-ignore-case on"
-
-bind -m vi-command 'Control-l: clear-screen'
-bind -m vi-insert 'Control-l: clear-screen'
+bind "set completion-ignore-case on" # ignore case in TAB completion
 
 
 ####################
