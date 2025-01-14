@@ -124,5 +124,4 @@ fi
 # yazi plugins
 set +e 
 ya pack -a yazi-rs/plugins:git
-ya pack -a yazi-rs/plugins:smart-enter
 set -e
