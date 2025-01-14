@@ -13,7 +13,9 @@ export YAZI_CONFIG_HOME=~/.config/yazi # cuz diff on windows
 export HISTCONTROL=ignoredups:erasedups # no duplicate entries
 export HISTSIZE=1000
 export HISTFILESIZE=999
+
 shopt -s histappend # do not overwrite history
+shopt -s cmdhist # save multi-line commands in history as single line
 
 eval "$(fzf --bash)" # fzf key bindings/fuzzy completion
 eval "$(starship init bash)"
