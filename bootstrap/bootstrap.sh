@@ -123,6 +123,8 @@ fi
 
 # yazi plugins
 set +e 
+echo ''
+echo "------- Bootstrapping plugins..."
 ya pack -a yazi-rs/plugins:git
 ya pack -a yazi-rs/plugins:smart-enter
 set -e
