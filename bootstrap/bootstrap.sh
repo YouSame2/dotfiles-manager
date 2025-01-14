@@ -91,7 +91,7 @@ if [[ "$OS" = Darwin ]]; then
 
 elif [[ "$OS" =~ Cygwin|Msys|MinGW ]]; then
     echo ""
-    echo "Windows detected."
+    echo "------- Bootstrapping Windows"
 
     # Check if choco is installed
     if ! command -v choco &>/dev/null; then
