@@ -1,0 +1,36 @@
+# basically bookmarks
+
+[[manager.prepend_keymap]]
+on = ["g", "<Space>"]
+run = "cd --interactive"
+desc = "Jump To"
+
+[[manager.prepend_keymap]]
+on = ["g", "g"]
+run = "arrow -99999999"
+desc = "Top"
+
+[[manager.prepend_keymap]]
+on = ["g", "c"]
+run = "cd ~/.config"
+desc = "~/.config"
+
+[[manager.prepend_keymap]]
+on = ["g", "d"]
+run = "cd ~/Downloads"
+desc = "~/Downloads"
+
+[[manager.prepend_keymap]]
+on = ["g", "h"]
+run = "cd ~"
+desc = "Home"
+
+[[manager.prepend_keymap]]
+on = ["g", "r"]
+run = "cd ~/Documents/Repos"
+desc = "Repos"
+
+[[manager.prepend_keymap]]
+on = ["g", "1"]
+run = "cd D:/RAW"
+desc = "RAW"

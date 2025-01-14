@@ -13,10 +13,8 @@ $git_status\
 $cmd_duration\
 $time\
 $line_break\
-[​](fg:separator)\
 $character\
 """
-# [​](fg:separator) has a special character 
 
 ###########################################
 
@@ -52,10 +50,9 @@ git_status = "#31e268"
 ###########################################
 
 [character]
-success_symbol = "[❯](fg:prompt_ok)"
-error_symbol = "[❯](fg:prompt_err)"
-vimcmd_symbol = '[❯](fg:duration) '
-disabled = true
+success_symbol = "[](fg:prompt_ok)" # only diffs are these 2 lines
+error_symbol = "[](fg:prompt_err)"
+disabled = false
 
 [status]
 format = "[─](fg:separator)[](fg:status)[](fg:icon bg:status)[](fg:status bg:background)[ $status](bg:background)[](fg:background)"

@@ -8,14 +8,14 @@ source ~/.config/global-rc/.global-rc
 ###################
 
 export STARSHIP_CONFIG=~/.config/starship/starship-bash.toml
+export YAZI_CONFIG_HOME=~/.config/yazi # cuz diff on windows
 
 export HISTCONTROL=ignoredups:erasedups # no duplicate entries
 export HISTSIZE=1000
 export HISTFILESIZE=999
 shopt -s histappend # do not overwrite history
 
-# Set up fzf key bindings and fuzzy completion
-eval "$(fzf --bash)"
+eval "$(fzf --bash)" # fzf key bindings/fuzzy completion
 eval "$(starship init bash)"
 
 
@@ -42,8 +42,8 @@ bind 'set vi-cmd-mode-string \1\e[33;1m\2╰❯ \1\e[0m\2'
 bind 'set vi-ins-mode-string \1\e[34;1m\2╰❯ \1\e[0m\2'
 # bind 'set vi-cmd-mode-string "[N]"'
 # bind 'set vi-ins-mode-string "[I]"'
-# bind 'set vi-ins-mode-string \1\e[34;1m\2└──[INS] \1\e[0m\2'
 # bind 'set vi-cmd-mode-string \1\e[33;1m\2└──[CMD] \1\e[0m\2'
+# bind 'set vi-ins-mode-string \1\e[34;1m\2└──[INS] \1\e[0m\2'
 
 bind -m vi-command 'Control-l: clear-screen'
 bind -m vi-insert 'Control-l: clear-screen'

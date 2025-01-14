@@ -1,0 +1,41 @@
+# theme colors make some things hard to read so changing them
+
+# : Manager {{{
+
+[manager]
+
+# Count
+count_copied = { fg = "black", bg = "green" }
+count_cut = { fg = "black", bg = "red" }
+count_selected = { fg = "black", bg = "yellow" }
+
+# : }}}
+
+
+# : Mode {{{
+
+[mode]
+
+# Normal mode
+normal_main = { bg = "blue", fg = "black", bold = true }
+normal_alt = { fg = "darkgray", bg = "gray" }
+
+# Select mode
+select_main = { bg = "red", fg = "black", bold = true }
+select_alt = { fg = "red", bg = "gray" }
+
+# Unset mode
+unset_main = { bg = "red", fg = "black", bold = true }
+unset_alt = { fg = "red", bg = "gray" }
+
+# : }}}
+
+
+# : Status bar {{{
+
+[status]
+
+# Progress
+progress_normal = { fg = "black", bg = "black" }
+
+# : }}}

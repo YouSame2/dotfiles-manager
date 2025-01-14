@@ -14,6 +14,7 @@ alias ll='eza -lh --color=always --icons=always --group-directories-first --hype
 alias lla='eza -alh --color=always --icons=always --group-directories-first --hyperlink --time-style=iso --ignore-glob="ntuser.*|NTUSER.*"'
 alias lt='eza -aTh -L 1 --color=always --icons=always --group-directories-first --hyperlink --time-style=iso --ignore-glob="ntuser.*|NTUSER.*"'
 
+alias less='less --use-color'
 
 ###################
 # functions
@@ -25,4 +26,14 @@ dotfiles() {
     else
         "$DOTFILES"/dotfiles.sh "$@"
     fi
+}
+
+# enter yazi from pwd q to leave changing pwd Q to leave w/o changing pwd
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
 }
