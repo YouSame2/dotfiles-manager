@@ -123,5 +123,7 @@ fi
 
 # yazi plugins
 set +e 
+echo ''
+echo "------- Bootstrapping plugins..."
 ya pack -a yazi-rs/plugins:git
 set -e
