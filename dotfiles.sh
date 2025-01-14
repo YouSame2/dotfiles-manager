@@ -66,6 +66,8 @@ esac
 # link functionality
 ##########################
 
+# TODO: add mode '' so can get rid of dotfiles function to cd
+
 if [ "$MODE" == "link" ]; then
     "$DOTFILES"/install
     exit 0

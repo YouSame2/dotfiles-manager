@@ -12,15 +12,15 @@ OS=$(uname -o)
 # i noooo... nested if statment wholesale. dont feel like refactoring. bite me!
 install_fonts() {
     if [ -d "$DOTFILES/bootstrap/fonts" ]; then
-        echo "------- Installing fonts from $DOTFILES/bootstrap/fonts directory..."
-        for font in $DOTFILES/bootstrap/fonts/*; do
+        echo "------- Bootstrapping fonts from $DOTFILES/bootstrap/fonts directory..."
+        for font in "$DOTFILES"/bootstrap/fonts/*; do
             if [ -f "$font" ]; then
 
                 # windows part
                 if [[ "$OS" =~ Cygwin|Msys|MinGW ]]; then
                     if [[ ! -f "C:/Windows/Fonts/$(basename "$font")" ]]; then
                         cp "$font" 'C:/Windows/Fonts/' && \
-                        echo "Successfully installed: $font" || echo "Failed to install: $font"
+                        echo "Successfully installed ➡ $font" || echo "Failed to install ➡ $font"
                     else
                         echo "Already installed ➡ ($(basename "$font"))"
                     fi
@@ -29,7 +29,7 @@ install_fonts() {
                 elif [[ "$OS" = Darwin ]]; then
                     if [[ ! -f "$HOME/Library/Fonts/$(basename "$font")" ]]; then
                         cp "$font" ~/Library/Fonts/ && \
-                        echo "Successfully installed: $font" || echo "Failed to install: $font"
+                        echo "Successfully installed ➡ $font" || echo "Failed to install ➡ $font"
                     else
                         echo "Already installed ➡ ($(basename "$font"))"
                     fi
@@ -52,14 +52,14 @@ install_fonts # Run before stuff
 
 if [[ "$OS" = Darwin ]]; then
     echo ""
-    echo "macOS detected."
+    echo "------- Bootstrapping Mac..."
 
     # Check if Homebrew is installed
     if ! command -v brew &>/dev/null; then
-        echo "Homebrew is not installed. Installing Homebrew..."
+        echo "Homebrew not found. Installing Homebrew..."
 
         /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" && \
-        echo "Successfully installed: Homebrew" || \
+        echo "Successfully installed ➡ Homebrew" || \
         { echo "Error installing homebrew, please install manually"; exit 1; }
         echo ''
 
@@ -81,14 +81,13 @@ if [[ "$OS" = Darwin ]]; then
         brew bundle -v
     else
         echo "Brewfile not found in $DOTFILES/bootstrap/mac/. Please provide a Brewfile."
-        exit 1
     fi
 
 ####################
 # WINDOWS
 ####################
 
-# TODO: add winget and its packages to bootstrap (eza)
+# TODO: add winget and its packages to bootstrap (eza,yazi)
 
 elif [[ "$OS" =~ Cygwin|Msys|MinGW ]]; then
     echo ""
@@ -105,7 +104,7 @@ elif [[ "$OS" =~ Cygwin|Msys|MinGW ]]; then
     # Check if choco export file exists
     if [ -f "$DOTFILES/bootstrap/windows/packages.config" ]; then
         echo "Found packages.config. Installing packages..."
-        choco install $DOTFILES/bootstrap/windows/packages.config
+        choco install "$DOTFILES"/bootstrap/windows/packages.config
     else
         echo "packages.config not found in $DOTFILES/bootstrap/windows/. Please provide a valid choco export file. choco export [<options/switches>]"
         echo "see choco docs for export command"
@@ -116,3 +115,14 @@ else
     echo "Unsupported OS detected: $OS"
     exit 1
 fi
+
+####################
+# BOTH
+####################
+# add additional plugins/commands between set e's. i.e. yazi plugins. 
+
+# yazi plugins
+set +e 
+ya pack -a yazi-rs/plugins:git
+ya pack -a yazi-rs/plugins:smart-enter
+set -e
