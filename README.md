@@ -6,7 +6,8 @@
 - [🚀 Getting Started](#-getting-started)
     - [Dependencies](#dependencies)
     - [Installation:](#installation)
-    - [Recommended Usage](#recommended-usage)
+    - [Recommended Setup](#recommended-setup)
+- [🧠 Usage](#-usage)
 - [💥 What to Put Where](#-what-to-put-where)
 - [📖 Resources](#-resources)
 - [✏ Contributing](#-contributing)
@@ -34,18 +35,20 @@ Soooo... use cases kinda like this:
     path: AppData/Roaming/fd
     if: "[ `uname` != Darwin ]"
   ```
-> *working from pc:* "hey, this is a really cool package/alias! let me add it to my aliases"
+> *working from pc:* "hey, this is a really cool package/alias! let me add it to my aliases for both Mac and PC."
 - add to your .global_rc/.global_aliases file: `alias ls='eza --color=always --icons=always'`
-- run `dotfiles yeet` in terminal to &#xf1d8; YEET your dotfiles repo to remote (basically git push)
+- run `dotfiles yeet` in terminal to ✈ YEET your dotfiles repo to remote (basically git push)
 - goto coffee shop (required ;P) and whip out your ***shiny*** mac
 - run `dotfiles yank` in mac terminal to *"GET OVAH-HERE"* your dotfiles (basically git pull). Then `dotfiles bootstrap` to add any new packages/fonts/plugins and link any new symlinks you may have added to you're dotfiles!
 > [!NOTE]
-> You can also just run `dotfiles link` to skip bootstrapping and just link symlinks
+> You can also just run `dotfiles link` to skip bootstrapping and just link symlinks. The decision to keep them seperate commands instead of pulling on bootstrap is in case the user (🖐🏽 thats you) had some changes they didnt want to overwrite just yet.
 
 # 🌟 Highlights
+Ok, i'll admit, this part sounds way to formal and *may* have been gpt-ed...
+
 - Simple File Management: Easily add files and directories to your dotfiles repository with a single terminal command.
 
-- OS-Specific Symlinks: Define macOS- or Windows-specific symlinks for platform-dependent configurations.
+- OS-Specific Symlinks: Define macOS or Windows-specific symlinks for platform-dependent configurations.
 
 - Integrated Bootstrapping: Automatically install fonts, package managers, packages, and tools tailored to macOS or Windows environments.
 
@@ -56,7 +59,7 @@ Soooo... use cases kinda like this:
 - Customizable Bootstrapping: Extend the bootstrapping process to install additional plugins or packages.
 
 > [!IMPORTANT]
-> For windows you must be using git bash. Cygwin and other emulators might work, but i didn't test them.
+> For windows you must be using git bash. Cygwin and other emulators might work, but i didn't test them. Probably will require 1 or 2 changes in some if statements.
 
 # 💭 Why Use it
 Simply put i *really* wanted gnu stow or something similar on my windows pc, just some way to make my experience on windows similar to mac. [Chezmoi](https://github.com/twpayne/chezmoi) for some reason didnt work for me so i made this, but feel free to first try CHEZZZZ-moooooiii 🎶 Fuis-moi, le pire, c'est toi et moi 🎶 (kudos if you get the ref)
@@ -72,7 +75,9 @@ Make sure the following are installed on your systems
   
   https://chocolatey.org/install
   
-  > Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'
+  ```powershell
+  Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'
+  ```
 
 </details>
 
@@ -100,7 +105,7 @@ Make sure the following are installed on your systems
 
 <details>
   <summary>Others</summary>
-  These following are needed but get installed during the bootstrap process so you dont need to install them separately.
+  The following are needed but get installed during the bootstrap process so you dont need to install them separately.
 
   - Homebrew
   - Homebrew/bundle
@@ -111,24 +116,29 @@ Make sure the following are installed on your systems
 ### Installation:
 
 First add to .bashrc & .zshrc
-```
+```shell
 # sourcing univeral aliases add to both .bashrc & .zshrc
 source ~/.config/global-rc/.global-aliases
 source ~/.config/global-rc/.global-rc
 ```
 
-Next adjust export DOTFILES in `~/.config/global-rc/.global-rc` to point to where your dotfiles dir is located in both pcs. If they are different on each pc delete the entry from .global-rc and set the export in each .bashrc & .zshrc respectively. Ignore this if you already have the env var setup. Then follow one of the below 
+Next adjust export $DOTFILES env in `~/.config/global-rc/.global-rc` to point to where your dotfiles dir is located in both pcs. Mine for example looks like this:
+```shell
+export DOTFILES=~/Repos/Personal/dotfiles
+```
+
+If they are different on each pc delete the entry from .global-rc and set the export in each .bashrc & .zshrc respectively. Ignore this if you already have the env var setup. Then follow one of the below 
 
 <details>
 <summary>Fresh Install:</summary>
 
-- Fork this repo and clone it to your system with all submodules (or ssh if thats your thang)
-  ```
+- Fork this repo and clone it to your system with all submodules (or ssh-sss if thats your thang)
+  ```shell
   git clone --recurse-submodules https://github.com/YouSame2/dotfiles.git
   ```
 
 - Ensure submodules are up-to-date
-  ```
+  ```shell
   git submodule update --init --recursive
   ```
 
@@ -137,10 +147,10 @@ Next adjust export DOTFILES in `~/.config/global-rc/.global-rc` to point to wher
 - Add any additional commands/plugins you would like to install with the bootstrap process to the bottom of `$DOTFILES/bootstrap/bootstrap.sh` under 'echo "------- Bootstrapping plugins..."'
 
   > [!NOTE]
-  > Check out my personal dotfiles for ideas/reference
+  > Check out my personal dotfiles for ideas/reference.
 
-- Restart your preferred terminal, navigate to `$DOTFILES/bootstrap` dir and run:
-  ```
+- Restart your preferred terminal (not powershell you freak!), navigate to `$DOTFILES/bootstrap` dir and run:
+  ```shell
   ./bootstrap.sh
   ```
  
@@ -156,15 +166,86 @@ Next adjust export DOTFILES in `~/.config/global-rc/.global-rc` to point to wher
   # no need to copy install file & install.conf.yaml i provided templates already
   ```
 
-Imma be honest i havnt done this before so let me just explain what you need to do and go based of that 👍🏽. Essentially all contents of this project (i.e. dotfiles.sh, bootstrap/, dotbot, etc) need to be in the root of your dotfiles repo. Best thing i can think of is clone this repo (after doing initial steps above) into a temp dir and paste the files inside your dotfiles. If anyone knows a better way please let me know.
+  Imma be honest i havnt done this before so let me just explain what you need to do and go based of that 👍🏽. Essentially all contents of this project (i.e. dotfiles.sh, bootstrap/, dotbot, etc) need to be in the root of your dotfiles repo. Best thing i can think of is clone this repo (after doing initial steps above) into a temp dir and paste the files inside your dotfiles. If anyone knows a better way please let me know.
 
-Once they are copied should should be able to process the same as 'Fresh Install'. Continue from 3rd bullet point.
+  Once they are copied you should be able to proceed the same as 'Fresh Install'. Continue from 3rd bullet point.
 
 </details>
     
-### Recommended Usage
+### Recommended Setup
+
+Ofcourse dotfiles manager will work for just managing your dotfiles and bootstrapping even if you dont want crossplatform support. But to truly synchronize your dev environment across mac and windows here is the recommended setup a.k.a. how i use it.
+
+Obviously your going to want to use crossplatform packages as much as possible so starting top down:
+- **Terminal Emulator:** Wezterm
+- **Shell:** Git Bash on Windows, Zsh or Bash on Mac (I prefer Zsh but if you truly want the same env go with bash)
+- **Prompt:** Not needed but i prefer Starship
+- **Package Managers:** Use brew and choco as much as possible. The caveat is (currently) i have no way of syncing packages across brew and choco. So anytime im going to add a new package i just copy both brew and choco installs and add it to the respective backup file in bootstrap/
+- **Fonts:** Add any fonts you want into bootstrap/fonts
+- **Editor:** Duh...
+
+# 🧠 Usage
+
+**Usage:**
+
+`dotfiles <command> [options] <target>`
+
+
+| Command         | Description                                                                                          |
+|-----------------|------------------------------------------------------------------------------------------------------|
+| `add`           | Add a file or directory to the dotfiles repository and configure it for symlinking. Available options:<br>`-m`: Set the target symlink to apply only on macOS.<br>`-w`: Set the target symlink to apply only on Windows.|
+| `link`          | Rerun the dotbot configuration to ensure all symlinks are created or updated.| 
+| `yeet`          | Add all changes, commit, and push to the remote repository. Any [options] that come after yeet get passed straight to `git commit` as args. Note -m option for `add` does not apply to `yeet` and instead gets interpreted by git as a commit message. If no args are passed commit message defaults to 'YEET dotfiles'.|
+| `yank`          | Pull the latest changes from the remote dotfiles repository.|
+| `-h`<br>`--help`  | Display the help message. Basically what you're reading rn.|
+| `bootstrap`          | *WORK IN PROGRESS* |
+| `backup`          | *WORK IN PROGRESS* |
+
+**Examples**
+
+```bash
+# Add config.lua and configure it for all platforms
+dotfiles add config.lua 
+
+# Add config.lua and configure it for macOS only
+dotfiles add -m config.lua
+
+# Add config.lua and configure it for Windows only
+dotfiles add -w config.lua
+
+# Ensure all symlinks are created or updated
+dotfiles link
+
+# Commit all changes with the default message and push
+dotfiles yeet
+
+# Commit all changes with a custom git commit args and push
+dotfiles yeet -m 'Fix issue'
+
+# Pull the latest changes from the remote repository
+dotfiles yank
+```
+
 # 💥 What to Put Where
+Ight i'll make this quick cuz im tired of writing, but i get that this can be a bit confusing at first. let me break it down John.
+
+1. Make sure to set DOTFILES env somewhere in your rc's (recommend .global-rc)
+2. Make sure to source `.global-rc` and `.global-aliases` in .bashrc & .zshrc
+3. Now anything (aliases/functions/exports/etc) you want to get sourced in both Windows and Mac you add to its respective ./.config/global/ file
+4. Mac only sourcing add directly to .zshrc
+5. Windows only sourcing add to .bashrc
+6. Think of the root of your dotfiles folder as `~` whatever you `dotfiles add` will get placed in there with the respective relative path from `~` (*unless* you manually add it to install.conf.yaml for more complex symlinks)
+   - custom dotbot symlinking/playbooking add in ➡ ./install.conf.yaml
+7. Bootstrap/ folder is important. This contains all the brew/choco recipes, fonts, and other commands you want to get executed/bootstrapped when you run `dotfiles bootstrap` or backed up in `dotfiles backup`
+   - fonts go in ➡ ./bootstrap/fonts
+   - homebrew recipes go in ➡ ./bootstrap/mac/brewfile
+   - choco installs go in ➡ ./bootstrap/windows/package.config
+   - custom commands/plugins go in ➡ ./bootstrap/customs.sh
+   > [!TIP]
+   > Currently no method of matching brew recipes with choco installs. Next time your installing a package just copy both, paste in bootstrap, then run dotfiles bootstrap. 👍🏽
+
 # 📖 Resources
+
 - similar concept:
   
   https://gilbertsanchez.com/posts/terminals-shells-and-prompts/
@@ -184,53 +265,22 @@ Once they are copied should should be able to process the same as 'Fresh Install
   - x86_64-unknown-linux-gnu - Linux
 
 # ✏ Contributing
-TODO:
 
-still a lot to do as im learning bash and terminal.
+If its not obvious enough, this was my first bash script/project so still a lot to learn. If you want to contribute i'd love the help! You can start by checking out the TODOs listed below or the sections marked with *CONTRIBUTE* in the scripts where I had questions/uncertainties. Or if your a G and have a cool idea to add, I’d love to hear it!
 
+Clone ➡ New Branch ➡ PR
+
+**TODOS:**
 - [x] consolodate dotfiles-add and dotfiles-sync into the same script taking args. So instead you use it like a normal cli: i.e. dotfiles add -m file1.lua
 - [x] change format of yaml yq command so you can choose to specify if a committed dotfile should be MAC/WINDOWS/BOTH (-m -w) specific
 - [x] change dotfiles-sync name (maybe link?)
 - [x] change dotfiles-link function in script and aliases
 - [x] fix git functionality and test it
 - [x] add if statements for os specific symlinks
+- [ ] separate personal dotfiles
+- [ ] refactor project to be a submodule for easy integration
+- [ ] dotfiles bootstrap option
+- [ ] dotfiles backup option
+- [ ] match brew installs with corresponding choco install
+- [ ] make template repo/branch
 - [ ] when adding file/folder with no OS_FLAG (i.e. 'dotfiles add .config') in 'install.conf.yaml', if that file/folder already had an if statement the if statement wont get removed. this can lead so some unexpected behavior in rare situations. Im probably not going to deal with it since its niche, but feel free for a simple contribution if u want.
-
-<!--
-# Windows:
-
-so far this is what ive done to get this to work on windows. Im still in the process making it.
-
-In evalated PS:
-
-## 1. Clone Dotfiles Repo
-
-## 2. CHOCOLATEY
-   ```
-   Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
-   ```
-
-## 3. Install DotBot
-
-   ```pip install dotbot```
-
-## 4. Update Submodule
-
-   ```git submodule update --init --recursive```
-
-## 5. Run Dotbot
-
-   ```dotbot -c install.conf.yaml```
-
-## 6. Install Nerd Fonts
-
-## 7. Explainations
-
-   - Shells & Aliases
-   
-     setting aliases across mac and windows is a bit scuffed so in the end i settled on this:
-
-     windows i use git bash as my shell (currently, unless i find something better without WSL) and mac i use default zsh. doing this means both shells are fairly similar so i dont have to remember "oh, what was ls in windows again?"
-
-     for aliases since windows uses bash and mac uses zsh just put os specific aliases in there corresponding dotfile. for universal aliases (that work on both platforms) put it into .config/aliases/.universal_aliases. this file is then sourced in both .zshrc and .bashrc 🤯
- -->

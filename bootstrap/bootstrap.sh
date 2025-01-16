@@ -124,6 +124,7 @@ fi
 # yazi plugins
 set +e 
 echo ''
+# TODO separate this part out as its own script and run it here instead so user's commands dont get overwritten on submodule update.
 echo "------- Bootstrapping plugins..."
 ya pack -a yazi-rs/plugins:git
 set -e
