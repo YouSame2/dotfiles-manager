@@ -157,7 +157,7 @@ If they are different on each pc, delete the entry from .global-rc and set the e
 </details>
 
 <details>
-<summary>Integrate With Existing Dotfiles:</summary>
+<summary>Integrate With Existing Dotfiles (WORK IN PROGRESS):</summary>
 
 - If your dotfiles do not already have the dotbot submodule run the following inside dotfiles dir:
   ```shell
