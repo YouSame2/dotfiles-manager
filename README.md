@@ -14,7 +14,7 @@
 
 
 # 🛫 Overview: What the Skibidi is it?
-Simple cross-platform (Mac and Windows) dotfiles manager CLI built on top of dotbot. Lets you have a consistant dev environment by bootstrapping and automatically adding dotfile symlinks to your computers from within the terminal, think GNU Stow (kinda?) but works on windows too!
+Simple cross-platform (Mac and Windows) dotfiles manager CLI built on top of dotbot. Lets you have a consistent dev environment by bootstrapping and automatically adding dotfile symlinks to your computers from within the terminal, think GNU Stow (kinda?) but works on windows too!
 
 Soooo... use cases kinda like this:
 
@@ -39,9 +39,9 @@ Soooo... use cases kinda like this:
 - add to your .global_rc/.global_aliases file: `alias ls='eza --color=always --icons=always'`
 - run `dotfiles yeet` in terminal to ✈ YEET your dotfiles repo to remote (basically git push)
 - goto coffee shop (required ;P) and whip out your ***shiny*** mac
-- run `dotfiles yank` in mac terminal to *"GET OVAH-HERE"* your dotfiles (basically git pull). Then `dotfiles bootstrap` to add any new packages/fonts/plugins and link any new symlinks you may have added to you're dotfiles!
+- run `dotfiles yank` in mac terminal to *"GET OVAH-HERE"* your dotfiles (basically git pull). Then `dotfiles bootstrap` to add any new packages/fonts/plugins and link any new symlinks you may have added to your dotfiles!
 > [!NOTE]
-> You can also just run `dotfiles link` to skip bootstrapping and just link symlinks. The decision to keep them seperate commands instead of pulling on bootstrap is in case the user (🖐🏽 thats you) had some changes they didnt want to overwrite just yet.
+> You can also just run `dotfiles link` to skip bootstrapping and just link symlinks. The decision to keep them separate commands instead of pulling on bootstrap is in case the user (🖐🏽 that's you) had some changes they didn't want to overwrite just yet.
 
 # 🌟 Highlights
 Ok, i'll admit, this part sounds way to formal and *may* have been gpt-ed...
@@ -59,12 +59,12 @@ Ok, i'll admit, this part sounds way to formal and *may* have been gpt-ed...
 - Customizable Bootstrapping: Extend the bootstrapping process to install additional plugins or packages.
 
 > [!IMPORTANT]
-> For windows you must be using git bash. Cygwin and other emulators might work, but i didn't test them. Probably will require 1 or 2 changes in some if statements.
+> For windows you must be using git bash. Cygwin and other emulators might work, but I didn't test them. Probably will require 1 or 2 changes in some if statements.
 
 # 💭 Why Use it
-Simply put i *really* wanted gnu stow or something similar on my windows pc, just some way to make my experience on windows similar to mac. [Chezmoi](https://github.com/twpayne/chezmoi) for some reason didnt work for me so i made this, but feel free to first try CHEZZZZ-moooooiii 🎶 Fuis-moi, le pire, c'est toi et moi 🎶 (kudos if you get the ref)
+Simply put i *really* I wanted GNU stow or something similar on my windows pc, just some way to make my experience on windows similar to mac. [Chezmoi](https://github.com/twpayne/chezmoi) for some reason didn't work for me so i made this, but feel free to first try CHEZZZZ-moooooiii 🎶 Fuis-moi, le pire, c'est toi et moi 🎶 (kudos if you get the ref)
 
-This leads me to the tinnie tiny elphant in the room... git bash. Yaaa i know werid. But fr couldnt really find a better solution. I didnt want to go the WSL2 route and well... powershell... "*sheesh, i aint that crazy*" (kudos x2)
+This leads me to the tinnie tiny elephant in the room... git bash. Yaaa I know, weird. But fr couldn't really find a better solution. I didn't want to go the WSL2 route and well... powershell... "*sheesh, I ain't that crazy*" (kudos x2)
 
 # 🚀 Getting Started
 ### Dependencies
@@ -93,7 +93,7 @@ Make sure the following are installed on your systems
   
   https://github.com/anishathalye/dotbot
 
-  Dotbot handles all the backend symlinking and runs off of python. It's already a submodule on this project so you shouldn't need to do anything extra unless your integrating into an existing dotfiles repo. For that follow the proper install method down below.
+  Dotbot handles all the backend symlinking and runs off of python. It's already a submodule on this project so you shouldn't need to do anything extra unless you're integrating into an existing dotfiles repo. For that follow the proper install method down below.
 
 </details>
 
@@ -105,7 +105,7 @@ Make sure the following are installed on your systems
 
 <details>
   <summary>Others</summary>
-  The following are needed but get installed during the bootstrap process so you dont need to install them separately.
+  The following are needed but get installed during the bootstrap process so you don't need to install them separately.
 
   - Homebrew
   - Homebrew/bundle
@@ -117,22 +117,22 @@ Make sure the following are installed on your systems
 
 First add to .bashrc & .zshrc
 ```shell
-# sourcing univeral aliases add to both .bashrc & .zshrc
+# sourcing universal aliases add to both .bashrc & .zshrc
 source ~/.config/global-rc/.global-aliases
 source ~/.config/global-rc/.global-rc
 ```
 
-Next adjust export $DOTFILES env in `~/.config/global-rc/.global-rc` to point to where your dotfiles dir is located in both pcs. Mine for example looks like this:
+Next, adjust export $DOTFILES env in `~/.config/global-rc/.global-rc` to point to where your dotfiles dir is located in both pcs. Mine for example looks like this:
 ```shell
 export DOTFILES=~/Repos/Personal/dotfiles
 ```
 
-If they are different on each pc delete the entry from .global-rc and set the export in each .bashrc & .zshrc respectively. Ignore this if you already have the env var setup. Then follow one of the below 
+If they are different on each pc, delete the entry from .global-rc and set the export in each .bashrc & .zshrc respectively. Ignore this if you already have the env var setup. Then follow one of the below 
 
 <details>
 <summary>Fresh Install:</summary>
 
-- Fork this repo and clone it to your system with all submodules (or ssh-sss if thats your thang)
+- Fork this repo and clone it to your system with all submodules (or ssh-sss if that's your thang)
   ```shell
   git clone --recurse-submodules https://github.com/YouSame2/dotfiles.git
   ```
@@ -147,7 +147,7 @@ If they are different on each pc delete the entry from .global-rc and set the ex
 - Add any additional commands/plugins you would like to install with the bootstrap process to the bottom of `$DOTFILES/bootstrap/bootstrap.sh` under 'echo "------- Bootstrapping plugins..."'
 
   > [!NOTE]
-  > Check out my personal dotfiles for ideas/reference.
+  > Check out my personal dotfiles for ideas/references.
 
 - Restart your preferred terminal (not powershell you freak!), navigate to `$DOTFILES/bootstrap` dir and run:
   ```shell
@@ -166,21 +166,21 @@ If they are different on each pc delete the entry from .global-rc and set the ex
   # no need to copy install file & install.conf.yaml i provided templates already
   ```
 
-  Imma be honest i havnt done this before so let me just explain what you need to do and go based of that 👍🏽. Essentially all contents of this project (i.e. dotfiles.sh, bootstrap/, dotbot, etc) need to be in the root of your dotfiles repo. Best thing i can think of is clone this repo (after doing initial steps above) into a temp dir and paste the files inside your dotfiles. If anyone knows a better way please let me know.
+  Imma be honest i haven't done this before so let me just explain what you need to do and go based on that 👍🏽. Essentially all contents of this project (i.e. dotfiles.sh, bootstrap/, dotbot, etc) need to be in the root of your dotfiles repo. Best thing I can think of is clone this repo (after doing initial steps above) into a temp dir and paste the files inside your dotfiles. If anyone knows a better way please let me know.
 
-  Once they are copied you should be able to proceed the same as 'Fresh Install'. Continue from 3rd bullet point.
+  Once they are copied you should be able to proceed the same as 'Fresh Install'. Continue from the 3rd bullet point.
 
 </details>
     
 ### Recommended Setup
 
-Ofcourse dotfiles manager will work for just managing your dotfiles and bootstrapping even if you dont want crossplatform support. But to truly synchronize your dev environment across mac and windows here is the recommended setup a.k.a. how i use it.
+Ofcourse dotfiles manager will work for just managing your dotfiles and bootstrapping even if you don't want cross platform support. But to truly synchronize your dev environment across mac and windows here is the recommended setup a.k.a. how i use it.
 
-Obviously your going to want to use crossplatform packages as much as possible so starting top down:
+Obviously you're going to want to use cross platform packages as much as possible so starting top down:
 - **Terminal Emulator:** Wezterm
 - **Shell:** Git Bash on Windows, Zsh or Bash on Mac (I prefer Zsh but if you truly want the same env go with bash)
 - **Prompt:** Not needed but i prefer Starship
-- **Package Managers:** Use brew and choco as much as possible. The caveat is (currently) i have no way of syncing packages across brew and choco. So anytime im going to add a new package i just copy both brew and choco installs and add it to the respective backup file in bootstrap/
+- **Package Managers:** Use brew and choco as much as possible. The caveat is (currently) I have no way of syncing packages across brew and choco. So anytime im going to add a new package i just copy both brew and choco installs and add it to the respective backup file in bootstrap/
 - **Fonts:** Add any fonts you want into bootstrap/fonts
 - **Editor:** Duh...
 
@@ -195,7 +195,7 @@ Obviously your going to want to use crossplatform packages as much as possible s
 |-----------------|------------------------------------------------------------------------------------------------------|
 | `add`           | Add a file or directory to the dotfiles repository and configure it for symlinking. Available options:<br>`-m`: Set the target symlink to apply only on macOS.<br>`-w`: Set the target symlink to apply only on Windows.|
 | `link`          | Rerun the dotbot configuration to ensure all symlinks are created or updated.| 
-| `yeet`          | Add all changes, commit, and push to the remote repository. Any [options] that come after yeet get passed straight to `git commit` as args. Note -m option for `add` does not apply to `yeet` and instead gets interpreted by git as a commit message. If no args are passed commit message defaults to 'YEET dotfiles'.|
+| `yeet`          | Add all changes, commit, and push to the remote repository. Any [options] that come after yeet get passed straight to `git commit` as args. Note -m option for `add` does not apply to `yeet` and instead gets interpreted by git as a commit message. If no args are passed, the commit message defaults to 'YEET dotfiles'.|
 | `yank`          | Pull the latest changes from the remote dotfiles repository.|
 | `-h`<br>`--help`  | Display the help message. Basically what you're reading rn.|
 | `bootstrap`          | *WORK IN PROGRESS* |
@@ -227,7 +227,7 @@ dotfiles yank
 ```
 
 # 💥 What to Put Where
-Ight i'll make this quick cuz im tired of writing, but i get that this can be a bit confusing at first. let me break it down John.
+Ight i'll make this quick cuz I'm tired of writing, but I get that this can be a bit confusing at first. Let me break it down John.
 
 1. Make sure to set DOTFILES env somewhere in your rc's (recommend .global-rc)
 2. Make sure to source `.global-rc` and `.global-aliases` in .bashrc & .zshrc
@@ -242,7 +242,7 @@ Ight i'll make this quick cuz im tired of writing, but i get that this can be a 
    - choco installs go in ➡ ./bootstrap/windows/package.config
    - custom commands/plugins go in ➡ ./bootstrap/customs.sh
    > [!TIP]
-   > Currently no method of matching brew recipes with choco installs. Next time your installing a package just copy both, paste in bootstrap, then run dotfiles bootstrap. 👍🏽
+   > Currently no method of matching brew recipes with choco installs. Next time you're installing a package just copy both, paste in bootstrap, then run dotfiles bootstrap. 👍🏽
 
 # 📖 Resources
 
@@ -266,12 +266,12 @@ Ight i'll make this quick cuz im tired of writing, but i get that this can be a 
 
 # ✏ Contributing
 
-If its not obvious enough, this was my first bash script/project so still a lot to learn. If you want to contribute i'd love the help! You can start by checking out the TODOs listed below or the sections marked with *CONTRIBUTE* in the scripts where I had questions/uncertainties. Or if your a G and have a cool idea to add, I’d love to hear it!
+If it's not obvious enough, this was my first bash script/project so still a lot to learn. If you want to contribute I'd love the help! You can start by checking out the TODOs listed below or the sections marked with *CONTRIBUTE* in the scripts where I had questions/uncertainties. Or if you're a G and have a cool idea to add, I’d love to hear it!
 
 Clone ➡ New Branch ➡ PR
 
 **TODOS:**
-- [x] consolodate dotfiles-add and dotfiles-sync into the same script taking args. So instead you use it like a normal cli: i.e. dotfiles add -m file1.lua
+- [x] consolidate dotfiles-add and dotfiles-sync into the same script taking args. So instead you use it like a normal cli: i.e. dotfiles add -m file1.lua
 - [x] change format of yaml yq command so you can choose to specify if a committed dotfile should be MAC/WINDOWS/BOTH (-m -w) specific
 - [x] change dotfiles-sync name (maybe link?)
 - [x] change dotfiles-link function in script and aliases
@@ -283,4 +283,4 @@ Clone ➡ New Branch ➡ PR
 - [ ] dotfiles backup option
 - [ ] match brew installs with corresponding choco install
 - [ ] make template repo/branch
-- [ ] when adding file/folder with no OS_FLAG (i.e. 'dotfiles add .config') in 'install.conf.yaml', if that file/folder already had an if statement the if statement wont get removed. this can lead so some unexpected behavior in rare situations. Im probably not going to deal with it since its niche, but feel free for a simple contribution if u want.
+- [ ] when adding a file/folder with no OS_FLAG (i.e. 'dotfiles add .config') in 'install.conf.yaml', if that file/folder already had an if statement the if statement won't get removed. This can lead to some unexpected behavior in rare situations. I'm probably not going to deal with it since it's niche, but feel free for a simple contribution if you want.
