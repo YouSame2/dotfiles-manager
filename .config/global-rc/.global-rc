@@ -17,7 +17,7 @@ echo -e "
 # exports
 ###################
 
-export DOTFILES=~/Documents/Repos/Personal/dotfiles
+export DOTFILES=~/Repos/Personal/dotfiles
 
 
 ###################

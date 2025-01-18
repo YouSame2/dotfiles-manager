@@ -28,7 +28,7 @@ dotfiles() {
     if [ -z "$1" ]; then
         cd "$DOTFILES"
     else
-        "$DOTFILES"/dotfiles.sh "$@"
+        "$DOTFILES"/dotfiles-manager-temp/dotfiles.sh "$@"
     fi
 }
 
