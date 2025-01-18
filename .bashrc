@@ -1,6 +1,6 @@
 # sourcing univeral aliases
-source ~/.config/global-rc/.global-aliases
 source ~/.config/global-rc/.global-rc
+source ~/.config/global-rc/.global-aliases
 
 
 ###################

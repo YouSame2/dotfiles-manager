@@ -10,13 +10,13 @@ set -e
 
 # TODO: add sync (running bootstrap.sh) and upgrade command (upgrade via each package manager)
 
+source "$DOTFILES"/.config/global-rc/.global-aliases
+source "$DOTFILES"/.config/global-rc/.global-rc
+
 if [[ -z "$DOTFILES" ]]; then
     echo "Dotfiles alias is not set please set and rerun script"
     exit 1
 fi
-
-source "$DOTFILES"/.config/global-rc/.global-aliases
-source "$DOTFILES"/.config/global-rc/.global-rc
 # CONTRIBUTE: i couldnt find any other way to access my shell functions without sourcing this file. if anyone knows how to allow this subshell script to access .bashrc or .zshrc functions without sourcing let me know!
 
 usage() {

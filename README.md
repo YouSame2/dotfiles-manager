@@ -118,8 +118,8 @@ Make sure the following are installed on your systems
 First add to .bashrc & .zshrc
 ```shell
 # sourcing universal aliases add to both .bashrc & .zshrc
-source ~/.config/global-rc/.global-aliases
 source ~/.config/global-rc/.global-rc
+source ~/.config/global-rc/.global-aliases
 ```
 
 Next, adjust export $DOTFILES env in `~/.config/global-rc/.global-rc` to point to where your dotfiles dir is located in both pcs. Mine for example looks like this:
