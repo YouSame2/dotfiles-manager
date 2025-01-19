@@ -6,76 +6,16 @@
 # aliases
 ###################
 
-# Changing "ls" to "eza"
-# 👇🏽 defaults for all eza/ls commands. ntuser= windows crit files= annoying af
-alias ls='eza --color=always --icons=always --group-directories-first --hyperlink --ignore-glob="ntuser.*|NTUSER.*"'
-alias la='eza -a --color=always --icons=always --group-directories-first --hyperlink --time-style=iso --ignore-glob="ntuser.*|NTUSER.*"'
-alias ll='eza -lh --color=always --icons=always --group-directories-first --hyperlink --time-style=iso --ignore-glob="ntuser.*|NTUSER.*"'
-alias lla='eza -alh --color=always --icons=always --group-directories-first --hyperlink --time-style=iso --ignore-glob="ntuser.*|NTUSER.*"'
-alias lt='eza -aTh -L 1 --color=always --icons=always --group-directories-first --hyperlink --time-style=iso --ignore-glob="ntuser.*|NTUSER.*"'
-
-alias less='less --use-color --ignore-case' # = smartcase
-
-alias grep="grep --color"
-alias df="df -h"
-
 
 ###################
 # functions
 ###################
 
+# dotfiles manager cli
 dotfiles() {
     if [ -z "$1" ]; then
         cd "$DOTFILES"
     else
-        "$DOTFILES"/dotfiles.sh "$@"
+        "$DOTFILES"/dotfiles-manager/dotfiles.sh "$@"
     fi
 }
-
-# enter yazi from pwd q to leave changing pwd Q to leave w/o changing pwd
-function y() {
-	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
-	yazi "$@" --cwd-file="$tmp"
-	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-		builtin cd -- "$cwd"
-	fi
-	rm -f -- "$tmp"
-}
-
-# extract based on extension: https://gitlab.com/dwt1/dotfiles/-/blob/master/.bashrc?ref_type=heads
-# function ex {
-#  if [ -z "$1" ]; then
-#     # display usage if no parameters given
-#     echo "Usage: ex <path/file_name>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|ex|tar.bz2|tar.gz|tar.xz>"
-#     echo "       extract <path/file_name_1.ext> [path/file_name_2.ext] [path/file_name_3.ext]"
-#  else
-#     for n in "$@"
-#     do
-#       if [ -f "$n" ] ; then
-#           case "${n%,}" in
-#             *.cbt|*.tar.bz2|*.tar.gz|*.tar.xz|*.tbz2|*.tgz|*.txz|*.tar)
-#                          tar xvf "$n"       ;;
-#             *.lzma)      unlzma ./"$n"      ;;
-#             *.bz2)       bunzip2 ./"$n"     ;;
-#             *.cbr|*.rar)       unrar x -ad ./"$n" ;;
-#             *.gz)        gunzip ./"$n"      ;;
-#             *.cbz|*.epub|*.zip)       unzip ./"$n"       ;;
-#             *.z)         uncompress ./"$n"  ;;
-#             *.7z|*.arj|*.cab|*.cb7|*.chm|*.deb|*.dmg|*.iso|*.lzh|*.msi|*.pkg|*.rpm|*.udf|*.wim|*.xar)
-#                          7z x ./"$n"        ;;
-#             *.xz)        unxz ./"$n"        ;;
-#             *.exe)       cabextract ./"$n"  ;;
-#             *.cpio)      cpio -id < ./"$n"  ;;
-#             *.cba|*.ace)      unace x ./"$n"      ;;
-#             *)
-#                          echo "ex: '$n' - unknown archive method"
-#                          return 1
-#                          ;;
-#           esac
-#       else
-#           echo "'$n' - file does not exist"
-#           return 1
-#       fi
-#     done
-# fi
-# }
