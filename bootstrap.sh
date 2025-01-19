@@ -68,7 +68,7 @@ if [[ "$OS" = Darwin ]]; then
     fi
 
     # Check if Homebrew Bundle is installed
-    if ! brew tap | grep -q "Homebrew/bundle"; then
+    if ! brew tap | grep -q -i "Homebrew/bundle"; then
         echo "Homebrew bundle tap not found. Installing Homebrew bundle..."
         brew tap Homebrew/bundle
         echo ''
