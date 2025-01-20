@@ -93,7 +93,7 @@ Make sure the following are installed on your systems
   
   https://github.com/anishathalye/dotbot
 
-  Dotbot handles all the backend symlinking and runs off of python. It's already a submodule on this project so you shouldn't need to do anything extra unless you're integrating into an existing dotfiles repo. For that follow the proper install method down below.
+  Dotbot handles all the backend symlinking and runs off of python. If you dont already have it as a submodule in your dotfiles ill cover that in the Installation section.
 
 </details>
 
@@ -115,62 +115,68 @@ Make sure the following are installed on your systems
  
 ### Installation:
 
-First add to .bashrc & .zshrc
-```shell
-# sourcing universal aliases add to both .bashrc & .zshrc
-source ~/.config/global-rc/.global-rc
-source ~/.config/global-rc/.global-aliases
-```
+I'm assuming you already have a dotfiles repo setup.
 
-Next, adjust export $DOTFILES env in `~/.config/global-rc/.global-rc` to point to where your dotfiles dir is located in both pcs. Mine for example looks like this:
-```shell
-export DOTFILES=~/Repos/Personal/dotfiles
-```
+1. add to the top of both .bashrc & .zshrc
+   ```shell
+   # sourcing universal aliases add to both .bashrc & .zshrc
+   source ~/.config/global-rc/.global-rc
+   source ~/.config/global-rc/.global-aliases
+   ```
 
-If they are different on each pc, delete the entry from .global-rc and set the export in each .bashrc & .zshrc respectively. Ignore this if you already have the env var setup. Then follow one of the below 
+2. Add dotbot submodule to your dotfiles repo (if not already added)
+   
+   In your dotfiles dir run:
 
-<details>
-<summary>Fresh Install:</summary>
+   ```shell
+   git submodule add https://github.com/anishathalye/dotbot
+   git config -f .gitmodules submodule.dotbot.ignore dirty # ignore dirty commits in the submodule
+   cp dotbot/tools/git-submodule/install .
+   ```
 
-- Fork this repo and clone it to your system with all submodules (or ssh-sss if that's your thang)
-  ```shell
-  git clone --recurse-submodules https://github.com/YouSame2/dotfiles.git
-  ```
+3. Add dotfiles-manager submodule to your dotfiles repo
+   
+   In your dotfiles dir run:
 
-- Ensure submodules are up-to-date
-  ```shell
-  git submodule update --init --recursive
-  ```
+   ```shell
+   git submodule add https://github.com/YouSame2/dotfiles-manager.git
+   ```
 
-- Add any homebrew recipes and any choco packages you would like to install in the bootstrap process to `$DOTFILES/bootstrap/mac/brewfile` & `$DOTFILES/bootstrap/windows/packages.config` respectively. **Do not** remove any.
+4. Copy template files
+   
+   In your dotfiles dir run:
 
-- Add any additional commands/plugins you would like to install with the bootstrap process to the bottom of `$DOTFILES/bootstrap/bootstrap.sh` under 'echo "------- Bootstrapping plugins..."'
+   ```shell
+   # does not overright folders/files only adds non existing
+   # if you want to use your own install.conf.yaml omit last file from cp
+   cp -r dotfiles-manager/.config dotfiles-manager/bootstrap dotfiles-manager/install.conf.yaml .
+   ```
+
+5. Add $DOTFILES env to .global-rc
+
+   In the newly copied file `./.config/global-rc/.global-rc` adjust the dotfiles export to point to where your dotfiles dir is located in both pcs. Mine for example looks like this:
+   ```shell
+   export DOTFILES=~/Repos/Personal/dotfiles
+   ```
+
+   If they are different on each pc, delete the entry from .global-rc and set the export in each .bashrc & .zshrc respectively. Ignore this if you already have the env var setup. Then follow one of the below 
+
+6. Add additional packages/commands to bootstrap (optional)
+
+   Add any homebrew recipes and any choco packages you would like to install in the bootstrap process to `$DOTFILES/bootstrap/mac/brewfile` & `$DOTFILES/bootstrap/windows/packages.config` respectively. **Do not** remove any.
+
+   Add any additional commands/plugins you would like to install with the bootstrap process to the bottom of `$DOTFILES/bootstrap/bootstrap.sh` under 'echo "------- Bootstrapping plugins..."'
 
   > [!NOTE]
-  > Check out my personal dotfiles for ideas/references.
+  > Check out my personal [dotfiles](https://github.com/YouSame2/dotfiles) for ideas/references.
 
-- Restart your preferred terminal (not powershell you freak!), navigate to `$DOTFILES/bootstrap` dir and run:
-  ```shell
-  ./bootstrap.sh
-  ```
- 
-</details>
+7. Run bootstrap
 
-<details>
-<summary>Integrate With Existing Dotfiles (WORK IN PROGRESS):</summary>
+   Restart your preferred terminal (not powershell you freak!), and run `dotfiles bootstrap` to being installing packages, running bootstrap commands, and finally running through your dotbot playbook (install.conf.yaml).
 
-- If your dotfiles do not already have the dotbot submodule run the following inside dotfiles dir:
-  ```shell
-  git submodule add https://github.com/anishathalye/dotbot
-  git config -f .gitmodules submodule.dotbot.ignore dirty # ignore dirty commits in the submodule
-  # no need to copy install file & install.conf.yaml i provided templates already
-  ```
+   Running this initially is necessary to install required packages for dotfiles add to work properly.
 
-  Imma be honest i haven't done this before so let me just explain what you need to do and go based on that 👍🏽. Essentially all contents of this project (i.e. dotfiles.sh, bootstrap/, dotbot, etc) need to be in the root of your dotfiles repo. Best thing I can think of is clone this repo (after doing initial steps above) into a temp dir and paste the files inside your dotfiles. If anyone knows a better way please let me know.
-
-  Once they are copied you should be able to proceed the same as 'Fresh Install'. Continue from the 3rd bullet point.
-
-</details>
+One final note: if you don’t want to keep copies of the templates in the submodule to avoid confusion, you could achieve this without adding the submodule. However, at that point, you likely already know what you’re doing.
     
 ### Recommended Setup
 
@@ -277,10 +283,9 @@ Clone ➡ New Branch ➡ PR
 - [x] change dotfiles-link function in script and aliases
 - [x] fix git functionality and test it
 - [x] add if statements for os specific symlinks
-- [ ] separate personal dotfiles
-- [ ] refactor project to be a submodule for easy integration
+- [x] separate personal dotfiles
+- [x] refactor project to be a submodule for easy integration
 - [ ] dotfiles bootstrap option
 - [ ] dotfiles backup option
 - [ ] match brew installs with corresponding choco install
-- [ ] make template repo/branch
 - [ ] when adding a file/folder with no OS_FLAG (i.e. 'dotfiles add .config') in 'install.conf.yaml', if that file/folder already had an if statement the if statement won't get removed. This can lead to some unexpected behavior in rare situations. I'm probably not going to deal with it since it's niche, but feel free for a simple contribution if you want.

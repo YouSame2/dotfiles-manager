@@ -1,0 +1,10 @@
+- defaults:
+    link:
+      create: true # Automatically create parent directories if they don't exist
+- link:
+    # for reference format is DESTINATION: path: SOURCE (dotfiles dir) example 👇🏼
+    # ~/.config:
+    #   path: .config
+- clean: ["~"] # removes dead symlinks in ~/
+# - shell: # dont need
+#     - [git submodule update --init --recursive, Installing submodules]
