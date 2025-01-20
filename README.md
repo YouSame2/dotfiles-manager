@@ -172,7 +172,7 @@ I'm assuming you already have a dotfiles repo setup.
 
 7. Run bootstrap
 
-   Restart your preferred terminal (not powershell you freak!), and run `dotfiles bootstrap` to being installing packages, running bootstrap commands, and finally running through your dotbot playbook (install.conf.yaml).
+   Restart your preferred terminal (not powershell you freak!), and run `dotfiles bootstrap` to begin installing packages, running bootstrap commands, and finally running through your dotbot playbook (install.conf.yaml).
 
    Running this initially is necessary to install required packages for dotfiles add to work properly.
 
