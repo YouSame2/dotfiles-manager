@@ -60,6 +60,10 @@ case "$1" in
         -h|--h|--help)
         usage
         ;;
+        *)
+        echo "Option $1 not recognized"
+        usage
+        ;;
 esac
 
 ##########################
