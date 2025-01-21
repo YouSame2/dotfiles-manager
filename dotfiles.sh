@@ -62,6 +62,7 @@ case "$1" in
         ;;
         *)
         echo "Option $1 not recognized"
+        echo ""
         usage
         ;;
 esac
@@ -93,15 +94,34 @@ elif [[ "$MODE" == "yank" ]]; then
     cd "$DOTFILES" && git pull
     exit 0
 
-elif [[ "$MODE" == "bootstrap" ]]; then
-    . "$DOTFILES"/dotfiles-manager/bootstrap.sh
-    exit 0
-
 # decided not to do this... tbh just cd to dir and run git from there
 # elif [[ "$MODE" == "commit" || "$MODE" == "push" || "$MODE" == "pull" ]]; then
 #     GIT_ARGS="$@"
 #     cd "$DOTFILES" && git "$MODE" "$GIT_ARGS"
 #     exit 0
+
+##########################
+# bootstrap functionality
+##########################
+
+elif [[ "$MODE" == "bootstrap" ]]; then
+    . "$DOTFILES"/dotfiles-manager/bootstrap.sh
+    exit 0
+
+elif [[ "$MODE" == "backup" ]]; then
+    # Check OS
+    OS=$(uname -o)
+
+    # Mac backup:
+    [[ "$OS" = Darwin ]] && \
+    brew bundle dump --file=$DOTFILES/bootstrap/mac/Brewfile -
+       │ -no-vscode --force
+
+    # Windows backup:
+    [[ "$OS" =~ Cygwin|Msys|MinGW ]] && \
+    choco export -o="$DOTFILES"/bootstrap/windows/packages.config
+    
+    exit 0
 
 ##########################
 # add functionality
