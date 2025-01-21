@@ -120,6 +120,7 @@ elif [[ "$MODE" == "backup" ]]; then
     # Windows backup:
     [[ "$OS" =~ Cygwin|Msys|MinGW ]] && \
     choco export -o="$DOTFILES"/bootstrap/windows/packages.config
+    # testing
     
     exit 0
 
