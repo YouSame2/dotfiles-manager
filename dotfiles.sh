@@ -114,13 +114,11 @@ elif [[ "$MODE" == "backup" ]]; then
 
     # Mac backup:
     [[ "$OS" = Darwin ]] && \
-    brew bundle dump --file=$DOTFILES/bootstrap/mac/Brewfile -
-       │ -no-vscode --force
+    brew bundle dump --file="$DOTFILES/bootstrap/mac/Brewfile" --no-vscode --force
 
     # Windows backup:
     [[ "$OS" =~ Cygwin|Msys|MinGW ]] && \
     choco export -o="$DOTFILES"/bootstrap/windows/packages.config
-    # testing
     
     exit 0
 
