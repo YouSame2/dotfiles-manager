@@ -123,8 +123,11 @@ elif [[ "$MODE" == "backup" ]]; then
         choco export -o="$DOTFILES"/bootstrap/windows/packages.config
         
     else
-        echo "Unsupported OS detected: $OS"  
+        echo "Unsupported OS detected: $OS"
+        exit 1
     fi
+    echo ""
+    echo "Done. Don't forget to push new dotfiles changes using dotfiles yeet"
     exit 0
 
 ##########################
