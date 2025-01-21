@@ -53,7 +53,7 @@ OS_FLAG="u"
 TARGET=""
 
 case "$1" in
-    add|link|yeet|yank)
+    add|link|yeet|yank|bootstrap|backup)
         MODE=$1
         shift # Remove the first argument after processing. idk this b4
         ;;
@@ -87,6 +87,10 @@ elif [[ "$MODE" == "yeet" ]]; then
 elif [[ "$MODE" == "yank" ]]; then
     GIT_ARGS="$@"
     cd "$DOTFILES" && git pull
+    exit 0
+
+elif [[ "$MODE" == "bootstrap" ]]; then
+    . "$DOTFILES"/dotfiles-manager/bootstrap.sh
     exit 0
 
 # decided not to do this... tbh just cd to dir and run git from there
