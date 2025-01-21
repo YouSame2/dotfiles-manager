@@ -113,13 +113,18 @@ elif [[ "$MODE" == "backup" ]]; then
     OS=$(uname -o)
 
     # Mac backup:
-    [[ "$OS" = Darwin ]] && \
-    brew bundle dump --file="$DOTFILES/bootstrap/mac/Brewfile" --no-vscode --force
+    if [[ "$OS" = Darwin ]]; then
+        echo "------- Backing up Mac HomeBrew recipes..."
+        brew bundle dump --file="$DOTFILES/bootstrap/mac/Brewfile" --no-vscode --force
 
     # Windows backup:
-    [[ "$OS" =~ Cygwin|Msys|MinGW ]] && \
-    choco export -o="$DOTFILES"/bootstrap/windows/packages.config
-    
+    elif [[ "$OS" =~ Cygwin|Msys|MinGW ]]; then
+        echo "------- Backing up Windows Choco packages..."
+        choco export -o="$DOTFILES"/bootstrap/windows/packages.config
+        
+    else
+        echo "Unsupported OS detected: $OS"  
+    fi
     exit 0
 
 ##########################
