@@ -9,6 +9,7 @@
     - [Recommended Setup](#recommended-setup)
 - [🧠 Usage](#-usage)
 - [💥 What to Put Where](#-what-to-put-where)
+- [🙋🏽‍♂️ FAQ](#️-faq)
 - [📖 Resources](#-resources)
 - [✏ Contributing](#-contributing)
 
@@ -249,6 +250,15 @@ Ight i'll make this quick cuz I'm tired of writing, but I get that this can be a
    - custom commands/plugins go in ➡ ./bootstrap/customs.sh
    > [!TIP]
    > Currently no method of matching brew recipes with choco installs. Next time you're installing a package just copy both, paste in bootstrap, then run dotfiles bootstrap. 👍🏽
+
+# 🙋🏽‍♂️ FAQ
+- **How do I update dotfiles-manager submodule?**
+
+  from dotfiles run `git submodule update --remote`
+
+- **Dotbot cannot link symlinks?**
+
+  I had this happen to me too, its annoying but you need to run terminal as admin
 
 # 📖 Resources
 
