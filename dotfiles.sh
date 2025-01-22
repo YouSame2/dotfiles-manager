@@ -46,8 +46,10 @@ usage() {
 check_admin() {
     # Check OS
     OS=$(uname -o)
+
+    [[ ! "$OS" =~ Cygwin|Msys|MinGW ]] && return 0
     
-    [[ "$OS" =~ Cygwin|Msys|MinGW ]] && net session &>/dev/null || { echo "Error: Please run terminal in admin to prevent linking errors"; exit 1; }
+    net session &>/dev/null || { echo "Error: Please run terminal in admin to prevent linking errors"; exit 1; }
 }
 
 
