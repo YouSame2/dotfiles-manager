@@ -118,14 +118,8 @@ else
 fi
 
 ####################
-# BOTH
+# EXTRAS
 ####################
-# add additional plugins/commands between set e's. i.e. yazi plugins. 
 
-# yazi plugins
-set +e 
-echo ''
-# TODO separate this part out as its own script and run it here instead so user's commands dont get overwritten on submodule update.
-echo "------- Bootstrapping plugins..."
-ya pack -a yazi-rs/plugins:git
-set -e
+extras_file="$DOTFILES"/bootstrap/extras.sh
+[[ -e extras_file ]] && echo "------- Bootstrapping extras..." && . extras_files
