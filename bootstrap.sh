@@ -121,5 +121,9 @@ fi
 # EXTRAS
 ####################
 
+set +e
 extras_file="$DOTFILES"/bootstrap/extras.sh
-[[ -e extras_file ]] && echo "------- Bootstrapping extras..." && . extras_files
+[[ -e "$extras_file" ]] && \
+echo "------- Bootstrapping extras..." && \
+. "$extras_file"
+set -e
