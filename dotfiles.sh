@@ -47,7 +47,7 @@ check_admin() {
     # Check OS
     OS=$(uname -o)
     
-    [[ "$OS" =~ Cygwin|Msys|MinGW ]] && net session >nul 2>&1 || { echo "Error: Please run terminal in admin to prevent linking errors"; exit 1; }
+    [[ "$OS" =~ Cygwin|Msys|MinGW ]] && net session &>/dev/null || { echo "Error: Please run terminal in admin to prevent linking errors"; exit 1; }
 }
 
 
