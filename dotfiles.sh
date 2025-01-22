@@ -53,11 +53,16 @@ OS_FLAG="u"
 TARGET=""
 
 case "$1" in
-    add|link|yeet|yank)
+    add|link|yeet|yank|bootstrap|backup)
         MODE=$1
         shift # Remove the first argument after processing. idk this b4
         ;;
         -h|--h|--help)
+        usage
+        ;;
+        *)
+        echo "Option $1 not recognized"
+        echo ""
         usage
         ;;
 esac
@@ -94,6 +99,36 @@ elif [[ "$MODE" == "yank" ]]; then
 #     GIT_ARGS="$@"
 #     cd "$DOTFILES" && git "$MODE" "$GIT_ARGS"
 #     exit 0
+
+##########################
+# bootstrap functionality
+##########################
+
+elif [[ "$MODE" == "bootstrap" ]]; then
+    . "$DOTFILES"/dotfiles-manager/bootstrap.sh
+    exit 0
+
+elif [[ "$MODE" == "backup" ]]; then
+    # Check OS
+    OS=$(uname -o)
+
+    # Mac backup:
+    if [[ "$OS" = Darwin ]]; then
+        echo "------- Backing up Mac HomeBrew recipes..."
+        brew bundle dump --file="$DOTFILES/bootstrap/mac/Brewfile" --no-vscode --force
+
+    # Windows backup:
+    elif [[ "$OS" =~ Cygwin|Msys|MinGW ]]; then
+        echo "------- Backing up Windows Choco packages..."
+        choco export -o="$DOTFILES"/bootstrap/windows/packages.config
+        
+    else
+        echo "Unsupported OS detected: $OS"
+        exit 1
+    fi
+    echo ""
+    echo "Done. Don't forget to push new dotfiles changes using dotfiles yeet"
+    exit 0
 
 ##########################
 # add functionality

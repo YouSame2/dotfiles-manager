@@ -285,7 +285,7 @@ Clone ➡ New Branch ➡ PR
 - [x] add if statements for os specific symlinks
 - [x] separate personal dotfiles
 - [x] refactor project to be a submodule for easy integration
-- [ ] dotfiles bootstrap option
-- [ ] dotfiles backup option
+- [x] dotfiles bootstrap option
+- [x] dotfiles backup option
 - [ ] match brew installs with corresponding choco install
 - [ ] when adding a file/folder with no OS_FLAG (i.e. 'dotfiles add .config') in 'install.conf.yaml', if that file/folder already had an if statement the if statement won't get removed. This can lead to some unexpected behavior in rare situations. I'm probably not going to deal with it since it's niche, but feel free for a simple contribution if you want.
