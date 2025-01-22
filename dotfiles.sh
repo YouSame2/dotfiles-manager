@@ -6,10 +6,6 @@ set -e
 # init
 ##########################
 
-# TODO: add check for elevated privileges. my god this pissed me off...
-
-# TODO: add sync (running bootstrap.sh) and upgrade command (upgrade via each package manager)
-
 [[ -z "$DOTFILES" ]] && echo "Dotfiles alias is not set please set and rerun script" && exit 1
 
 source "$DOTFILES"/.config/global-rc/.global-aliases
@@ -45,6 +41,13 @@ usage() {
     echo "  dotfiles yeet -m 'Fix issue'    Commit all changes with custom git commit args and push."
     echo "  dotfiles yank                   Pull the latest changes from the remote repository."
     exit 1
+}
+
+check_admin() {
+    # Check OS
+    OS=$(uname -o)
+    
+    [[ "$OS" =~ Cygwin|Msys|MinGW ]] && net session >nul 2>&1 || { echo "Error: Please run terminal in admin to prevent linking errors"; exit 1; }
 }
 
 
@@ -105,6 +108,7 @@ elif [[ "$MODE" == "yank" ]]; then
 ##########################
 
 elif [[ "$MODE" == "bootstrap" ]]; then
+    check_admin
     . "$DOTFILES"/dotfiles-manager/bootstrap.sh
     exit 0
 
@@ -136,6 +140,7 @@ elif [[ "$MODE" == "backup" ]]; then
 
 # Parse the arguments
 elif [[ "$MODE" == "add" ]]; then
+    check_admin
     while [[ $# -gt 0 ]]; do
         case $1 in 
             -m)
