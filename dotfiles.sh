@@ -75,6 +75,7 @@ esac
 ##########################
 
 if [ "$MODE" == "link" ]; then
+    check_admin
     "$DOTFILES"/install
     exit 0
 
