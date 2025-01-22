@@ -77,9 +77,7 @@ if [[ "$OS" = Darwin ]]; then
     # Check for Brewfile
     if [ -f "$DOTFILES/bootstrap/mac/Brewfile" ]; then
         echo "Found Brewfile. Installing packages..."
-        # TODO: remove the cd
-        cd $DOTFILES/bootstrap/mac
-        brew bundle -v
+        brew bundle -v --file="$DOTFILES/bootstrap/mac/Brewfile"
     else
         echo "Brewfile not found in $DOTFILES/bootstrap/mac/. Please provide a Brewfile."
     fi
