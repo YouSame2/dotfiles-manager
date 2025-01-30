@@ -125,3 +125,6 @@ extras_file="$DOTFILES"/bootstrap/extras.sh
 echo "------- Bootstrapping extras..." && \
 . "$extras_file"
 set -e
+
+echo ""
+echo "------- Bootstrapping complete, please restart terminal..."
