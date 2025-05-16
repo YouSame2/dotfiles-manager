@@ -82,6 +82,16 @@ if [[ "$OS" = Darwin ]]; then
         echo "Brewfile not found in $DOTFILES/bootstrap/mac/. Please provide a Brewfile."
     fi
 
+    # Install fnm and Node.js
+    command -v fnm >/dev/null && echo "fnm found, skipping.." || {
+        echo 'installing fnm...'
+        curl -o- https://fnm.vercel.app/install | bash
+    }
+    command -v node >/dev/null && echo "node found, skipping..." || {
+        echo 'installing Node.js v22...'
+        fnm install 22
+    }
+
 ####################
 # WINDOWS
 ####################
@@ -110,9 +120,39 @@ elif [[ "$OS" =~ Cygwin|Msys|MinGW ]]; then
         exit 1
     fi
 
+    # Install fnm and Node.js
+    command -v fnm >/dev/null && echo "fnm found, skipping.." || {
+        echo 'installing fnm...'
+        winget install Schniz.fnm
+    }
+    command -v node >/dev/null && echo "node found, skipping..." || {
+        echo 'installing Node.js v22...'
+        fnm install 22
+    }
+
 else
     echo "Unsupported OS detected: $OS"
     exit 1
+fi
+
+####################
+# NPM PACKAGES
+####################
+
+echo ""
+echo "------- Bootstrapping NPM global packages..."
+
+# Check if npm is installed
+if command -v npm &>/dev/null; then
+    # Check if npm-packages.txt exists
+    if [ -f "$DOTFILES/bootstrap/npm/npm-packages.txt" ]; then
+        echo "Found npm-packages.txt. Installing packages..."
+        xargs npm install --global < "$DOTFILES"/bootstrap/npm/npm-packages.txt
+    else
+        echo "npm-packages.txt not found in $DOTFILES/bootstrap/npm/. Skipping global npm package installation."
+    fi
+else
+    echo "npm not found. Skipping global npm package installation."
 fi
 
 ####################
