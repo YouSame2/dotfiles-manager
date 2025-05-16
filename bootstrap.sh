@@ -148,9 +148,20 @@ echo "------- Bootstrapping NPM global packages..."
 # Check if npm is installed
 if command -v npm &>/dev/null; then
     # Check if npm-packages.txt exists
-    if [ -f "$DOTFILES/bootstrap/npm/npm-packages.txt" ]; then
-        echo "Found npm-packages.txt. Installing packages..."
-        xargs npm install --global < "$DOTFILES"/bootstrap/npm/npm-packages.txt
+    NPM_PACKAGES_FILE="$DOTFILES/bootstrap/npm/npm-packages.txt"
+    if [ -f "$NPM_PACKAGES_FILE" ]; then
+        echo "Found npm-packages.txt. Checking and installing global packages..."
+        while IFS= read -r package; do
+            if [ -z "$package" ]; then
+                continue # Skip empty lines
+            fi
+            if npm list --global "$package" &>/dev/null; then
+                echo "$package found, skipping..."
+            else
+                echo "$package not found, installing..."
+                npm install --global "$package" || echo "Failed to install ➡ $package"
+            fi
+        done < "$NPM_PACKAGES_FILE"
     else
         echo "npm-packages.txt not found in $DOTFILES/bootstrap/npm/. Skipping global npm package installation."
     fi
