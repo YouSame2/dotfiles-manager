@@ -124,8 +124,12 @@ fi
 
 set +e
 extras_file="$DOTFILES"/bootstrap/extras.sh
+<<<<<<< HEAD
 [[ -e "$extras_file" ]] &&
   echo "------- Bootstrapping extras..." &&
   . "$extras_file"
 set -e
 
+echo ""
+echo "------- Bootstrapping complete, please restart terminal..."
+>>>>>>> 90965a713668dbe3c85084e983f6629d631aa057
