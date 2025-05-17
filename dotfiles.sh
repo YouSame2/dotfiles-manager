@@ -127,17 +127,17 @@ elif [[ "$MODE" == "backup" ]]; then
 
   # Mac backup:
   if [[ "$OS" = Darwin ]]; then
-      echo "------- Backing up Mac HomeBrew recipes..."
-      brew bundle dump --file="$DOTFILES/bootstrap/mac/Brewfile" --no-vscode --force
+    echo "------- Backing up Mac HomeBrew recipes..."
+    brew bundle dump --file="$DOTFILES/bootstrap/mac/Brewfile" --no-vscode --force
 
   # Windows backup:
   elif [[ "$OS" =~ Cygwin|Msys|MinGW ]]; then
-      echo "------- Backing up Windows Choco packages..."
-      choco export -o="$DOTFILES"/bootstrap/windows/packages.config
+    echo "------- Backing up Windows Choco packages..."
+    choco export -o="$DOTFILES"/bootstrap/windows/packages.config
 
   else
-      echo "Unsupported OS detected: $OS"
-      exit 1
+    echo "Unsupported OS detected: $OS"
+    exit 1
   fi
 
   # NPM global packages backup:
@@ -150,24 +150,27 @@ elif [[ "$MODE" == "backup" ]]; then
     "@vscode/vsce"
   )
 
-  # Generate the list of global packages and store in an array
-  readarray -t npm_packages < <(npm list -g --parseable --depth=0 | tail -n +2 | sed 's/.*[\\\/]node_modules[\\\/]//')
+  # Generate the list of global packages and store in an array (compatible with Bash and Zsh)
+  npm_packages=()
+  while IFS= read -r line; do
+    npm_packages+=("$line")
+  done < <(npm list -g --parseable --depth=0 | tail -n +2 | sed 's/.*[\\/]node_modules[\\/]//')
 
   # Filter out ignored packages and write to the file
   filtered_packages=()
   for package in "${npm_packages[@]}"; do
-    # Check if the package is NOT in the ignore list
     if [[ ! " ${npm_ignore[@]} " =~ " ${package} " ]]; then
       filtered_packages+=("$package")
     fi
   done
 
   # Write the filtered list to the file
-  printf "%s\n" "${filtered_packages[@]}" > "$DOTFILES"/bootstrap/npm-packages.txt
+  printf "%s\n" "${filtered_packages[@]}" >"$DOTFILES"/bootstrap/npm-packages.txt
 
   echo ""
   echo "Done. Don't forget to push new dotfiles changes using dotfiles yeet"
-  exit 0
+  exit
+  0
 
 ##########################
 # add functionality
