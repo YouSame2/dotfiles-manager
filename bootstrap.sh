@@ -85,15 +85,18 @@ if [[ "$OS" = Darwin ]]; then
     echo "Brewfile not found in $DOTFILES/bootstrap/mac/. Please provide a Brewfile."
   fi
 
-    # Install fnm and Node.js
-    command -v fnm >/dev/null && echo "fnm found, skipping.." || {
-        echo 'installing fnm...'
-        curl -o- https://fnm.vercel.app/install | bash
-    }
-    command -v node >/dev/null && echo "node found, skipping..." || {
-        echo 'installing Node.js v22...'
-        fnm install 22
-    }
+  echo ""
+  echo "------- Bootstrapping Node and fnm..."
+
+  # Install fnm and Node.js
+  command -v fnm >/dev/null && echo "fnm found, skipping.." || {
+    echo 'installing fnm...'
+    curl -o- https://fnm.vercel.app/install | bash
+  }
+  command -v node >/dev/null && echo "node found, skipping..." || {
+    echo 'installing Node.js v22...'
+    fnm install 22
+  }
 
 ####################
 # WINDOWS
@@ -123,20 +126,23 @@ elif [[ "$OS" =~ Cygwin|Msys|MinGW ]]; then
     exit 1
   fi
 
-    # Install fnm and Node.js
-    command -v fnm >/dev/null && echo "fnm found, skipping.." || {
-        echo 'installing fnm...'
-        winget install Schniz.fnm
-    }
-    command -v node >/dev/null && echo "node found, skipping..." || {
-        echo 'installing Node.js v22...'
-        fnm install 22
-    }
-
 else
   echo "Unsupported OS detected: $OS"
   exit 1
 fi
+
+echo ""
+echo "------- Bootstrapping Node and fnm..."
+
+# Install fnm and Node.js
+command -v fnm >/dev/null && echo "fnm found, skipping..." || {
+  echo 'installing fnm...'
+  winget install Schniz.fnm
+}
+command -v node >/dev/null && echo "node found, skipping..." || {
+  echo 'installing Node.js v22...'
+  fnm install 22
+}
 
 ####################
 # NPM PACKAGES
@@ -145,28 +151,32 @@ fi
 echo ""
 echo "------- Bootstrapping NPM global packages..."
 
+NPM_PACKAGES_FILE="$DOTFILES/bootstrap/npm-packages.txt"
+
+if [ ! -f "$NPM_PACKAGES_FILE" ]; then
+  echo "npm-packages.txt not found in $DOTFILES/bootstrap/. Skipping global npm package installation."
+
 # Check if npm is installed
-if command -v npm &>/dev/null; then
-    # Check if npm-packages.txt exists
-    NPM_PACKAGES_FILE="$DOTFILES/bootstrap/npm-packages.txt"
-    if [ -f "$NPM_PACKAGES_FILE" ]; then
-        echo "Found npm-packages.txt. Checking and installing global packages..."
-        while IFS= read -r package; do
-            if [ -z "$package" ]; then
-                continue # Skip empty lines
-            fi
-            if npm list --global "$package" &>/dev/null; then
-                echo "$package found, skipping..."
-            else
-                echo "$package not found, installing..."
-                npm install --global "$package" || echo "Failed to install ➡ $package"
-            fi
-        done < "$NPM_PACKAGES_FILE"
-    else
-        echo "npm-packages.txt not found in $DOTFILES/bootstrap/. Skipping global npm package installation."
-    fi
+elif ! command -v npm &>/dev/null; then
+  echo "npm not found. Skipping global npm package installation."
+
 else
-    echo "npm not found. Skipping global npm package installation."
+  echo "Found npm-packages.txt"
+  while IFS= read -r pkg; do
+    # trim stray \r and whitespace
+    pkg="${pkg//$'\r'/}"
+    pkg="${pkg#"${pkg%%[![:space:]]*}"}"
+    pkg="${pkg%"${pkg##*[![:space:]]}"}"
+    [ -z "$pkg" ] && continue
+
+    if npm ls -g --depth=0 "$pkg" >/dev/null 2>&1; then
+      echo "$pkg already installed, skipping..."
+    else
+      echo "$pkg not found, installing..."
+      npm install --global "$pkg" || echo "Failed to install $pkg"
+    fi
+    # stripping carrage return
+  done < <(tr -d '\r' <"$NPM_PACKAGES_FILE")
 fi
 
 ####################
