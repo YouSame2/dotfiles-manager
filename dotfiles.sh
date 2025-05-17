@@ -142,7 +142,28 @@ elif [[ "$MODE" == "backup" ]]; then
 
   # NPM global packages backup:
   echo "------- Backing up NPM global packages..."
-  npm list -g --parseable --depth=0 | tail -n +2 | sed 's/.*[\\\/]node_modules[\\\/]//' >"$DOTFILES"/bootstrap//npm-packages.txt
+
+  # Define packages to ignore during backup
+  npm_ignore=(
+    "npm"
+    "npx"
+    "@vscode/vsce"
+  )
+
+  # Generate the list of global packages and store in an array
+  readarray -t npm_packages < <(npm list -g --parseable --depth=0 | tail -n +2 | sed 's/.*[\\\/]node_modules[\\\/]//')
+
+  # Filter out ignored packages and write to the file
+  filtered_packages=()
+  for package in "${npm_packages[@]}"; do
+    # Check if the package is NOT in the ignore list
+    if [[ ! " ${npm_ignore[@]} " =~ " ${package} " ]]; then
+      filtered_packages+=("$package")
+    fi
+  done
+
+  # Write the filtered list to the file
+  printf "%s\n" "${filtered_packages[@]}" > "$DOTFILES"/bootstrap/npm-packages.txt
 
   echo ""
   echo "Done. Don't forget to push new dotfiles changes using dotfiles yeet"
