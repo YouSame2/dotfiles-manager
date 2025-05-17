@@ -154,7 +154,7 @@ elif [[ "$MODE" == "backup" ]]; then
   npm_packages=()
   while IFS= read -r line; do
     npm_packages+=("$line")
-  done < <(npm list -g --parseable --depth=0 | tail -n +2 | sed 's/.*[\\/]node_modules[\\/]//')
+  done < <(npm list -g --parseable --depth=0 | tail -n +2 | sed 's/.*[\\/]//')
 
   # Filter out ignored packages and write to the file
   filtered_packages=()
