@@ -148,7 +148,7 @@ echo "------- Bootstrapping NPM global packages..."
 # Check if npm is installed
 if command -v npm &>/dev/null; then
     # Check if npm-packages.txt exists
-    NPM_PACKAGES_FILE="$DOTFILES/bootstrap/npm/npm-packages.txt"
+    NPM_PACKAGES_FILE="$DOTFILES/bootstrap/npm-packages.txt"
     if [ -f "$NPM_PACKAGES_FILE" ]; then
         echo "Found npm-packages.txt. Checking and installing global packages..."
         while IFS= read -r package; do
@@ -163,7 +163,7 @@ if command -v npm &>/dev/null; then
             fi
         done < "$NPM_PACKAGES_FILE"
     else
-        echo "npm-packages.txt not found in $DOTFILES/bootstrap/npm/. Skipping global npm package installation."
+        echo "npm-packages.txt not found in $DOTFILES/bootstrap/. Skipping global npm package installation."
     fi
 else
     echo "npm not found. Skipping global npm package installation."
