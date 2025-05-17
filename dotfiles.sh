@@ -103,7 +103,7 @@ elif [[ "$MODE" == "yeet" ]]; then
 
 elif [[ "$MODE" == "yank" ]]; then
   GIT_ARGS="$@"
-  cd "$DOTFILES" && git pull
+  cd "$DOTFILES" && git pull --recurse-submodules
   exit 0
 
 # decided not to do this... tbh just cd to dir and run git from there
