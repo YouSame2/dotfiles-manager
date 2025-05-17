@@ -126,23 +126,23 @@ elif [[ "$OS" =~ Cygwin|Msys|MinGW ]]; then
     exit 1
   fi
 
+  echo ""
+  echo "------- Bootstrapping Node and fnm..."
+
+  # Install fnm and Node.js
+  command -v fnm >/dev/null && echo "fnm found, skipping..." || {
+    echo 'installing fnm...'
+    winget install Schniz.fnm
+  }
+  command -v node >/dev/null && echo "node found, skipping..." || {
+    echo 'installing Node.js v22...'
+    fnm install 22
+  }
+
 else
   echo "Unsupported OS detected: $OS"
   exit 1
 fi
-
-echo ""
-echo "------- Bootstrapping Node and fnm..."
-
-# Install fnm and Node.js
-command -v fnm >/dev/null && echo "fnm found, skipping..." || {
-  echo 'installing fnm...'
-  winget install Schniz.fnm
-}
-command -v node >/dev/null && echo "node found, skipping..." || {
-  echo 'installing Node.js v22...'
-  fnm install 22
-}
 
 ####################
 # NPM PACKAGES
