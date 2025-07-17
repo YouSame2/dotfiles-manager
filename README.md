@@ -169,7 +169,7 @@ I'm assuming you already have a dotfiles repo setup.
    Add any additional commands/plugins you would like to install with the bootstrap process to the bottom of `$DOTFILES/bootstrap/bootstrap.sh` under 'echo "------- Bootstrapping plugins..."'
 
   > [!NOTE]
-  > Check out my personal [dotfiles](https://github.com/YouSame2/dotfiles) for ideas/references.
+  > Check out my personal [dotfiles](https://github.com/YouSame2/dotfiles-public) for ideas/references.
 
 7. Run bootstrap
 
