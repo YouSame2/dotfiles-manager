@@ -147,19 +147,20 @@ elif [[ "$MODE" == "backup" ]]; then
   npm_ignore=(
     "npm"
     "npx"
+    "vsce"
     "@vscode/vsce"
   )
 
-  # Generate the list of global packages and store in an array (compatible with Bash and Zsh)
+  # Generate the list of global packages using `jq`
   npm_packages=()
   while IFS= read -r line; do
     npm_packages+=("$line")
-  done < <(npm list -g --parseable --depth=0 | tail -n +2 | sed 's/.*[\\/]//')
+  done < <(npm ls -g --depth=0 --json | jq -r '.dependencies | keys[]')
 
   # Filter out ignored packages and write to the file
   filtered_packages=()
   for package in "${npm_packages[@]}"; do
-    if [[ ! " ${npm_ignore[@]} " =~ " ${package} " ]]; then
+    if [[ ! " ${npm_ignore[*]} " =~ " ${package} " ]]; then
       filtered_packages+=("$package")
     fi
   done
@@ -239,25 +240,29 @@ elif [[ "$MODE" == "add" ]]; then
 
   # Make and move the target to the dotfiles directory
   mkdir -p "$DOTFILES/$MKDIR_PATH" &&
-    mv -i "$TARGET" "$DOTFILES/$MKDIR_PATH" &&
+    mv -i "$TARGET" "$DOTFILES/$MKDIR_PATH" && {
 
     # add path to config
-    yq -i "(.[] | select(.link) | .[].\"$CURRENT_DIR/$TARGET_NAME\".path) = \"$RELATIVE_PATH\"" "$INSTALL_FILE" ||
-    {
-      echo "Error: Please double check the files and OS compatibility."
-      exit 1
-    }
-  # 👆🏼 yq = confusing af...
+    LINK_DESTINATION="$CURRENT_DIR/$TARGET_NAME"
+    DOTBOT_PATH="$RELATIVE_PATH"
 
-  # handle OS_FLAGS
-  if [[ $OS_FLAG == "w" ]]; then
-    yq -i "(.[] | select(.link) | .[].\"$CURRENT_DIR/$TARGET_NAME\".if) = \"[ \`uname\` != Darwin ]\"" "$INSTALL_FILE"
-    # CONTRIBUTE: I searched for a FULL DAY to figure out a way to detect windows in dotbot. i tried EVERY PERMUTATION, and trust me the only way is to check if its not mac... If any1 figures this out plz lmk. it actually pissed me off.
+    # Use environment variables to pass values to yq to handle special characters and spaces
+    KEY_DEST="$LINK_DESTINATION" PATH_VAL="$DOTBOT_PATH" yq -i '(.[] | select(.link).link) += {strenv(KEY_DEST): {"path": strenv(PATH_VAL)}}' "$INSTALL_FILE" ||
+      {
+        echo "Error: Failed to add path to config. Please check file and OS compatibility."
+        exit 1
+      }
 
-  elif [[ $OS_FLAG == "m" ]]; then
-    yq -i "(.[] | select(.link) | .[].\"$CURRENT_DIR/$TARGET_NAME\".if) = \"[ \`uname\` = Darwin ]\"" "$INSTALL_FILE"
-    # CONTRIBUTE: when adding file/folder with no OS_FLAG (i.e. 'dotfiles add .config') in 'install.conf.yaml', if that file/folder already had an if statement the if statement wont get removed. this can lead so some unexpected behavior in rare situations. Im probably not going to deal with it since its niche, but feel free for a simple contribution if u want.
-  fi
+    # handle OS_FLAGS
+    if [[ $OS_FLAG == "w" ]]; then
+      KEY_DEST="$LINK_DESTINATION" yq -i '(.[] | select(.link).link.[strenv(KEY_DEST)]).if = "[ `uname` != Darwin ]"' "$INSTALL_FILE"
+      # CONTRIBUTE: I searched for a FULL DAY to figure out a way to detect windows in dotbot. i tried EVERY PERMUTATION, and trust me the only way is to check if its not mac... If any1 figures this out plz lmk. it actually pissed me off.
+
+    elif [[ $OS_FLAG == "m" ]]; then
+      KEY_DEST="$LINK_DESTINATION" yq -i '(.[] | select(.link).link.[strenv(KEY_DEST)]).if = "[ `uname` = Darwin ]"' "$INSTALL_FILE"
+      # CONTRIBUTE: when adding file/folder with no OS_FLAG (i.e. 'dotfiles add .config') in 'install.conf.yaml', if that file/folder already had an if statement the if statement wont get removed. this can lead so some unexpected behavior in rare situations. Im probably not going to deal with it since its niche, but feel free for a simple contribution if u want.
+    fi
+  }
 
   # Confirmation
   echo ''
