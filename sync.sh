@@ -189,17 +189,10 @@ hooks_dir="$DOTFILES"/sync
 if [ -d "$hooks_dir" ]; then
   echo "------- Running sync hooks from $hooks_dir..."
   # Iterate in sorted order to provide predictable execution order
-  for hook in "$hooks_dir"/*; do
-    [ -e "$hook" ] || continue
-    if [ -f "$hook" ] && [ -x "$hook" ]; then
-      echo "Running ➡ $hook"
-      "$hook" || echo "Hook failed ➡ $hook"
-    elif [ -f "$hook" ]; then
-      echo "Sourcing ➡ $hook"
-      . "$hook" || echo "Hook (sourced) failed ➡ $hook"
-    else
-      echo "Skipping non-file ➡ $hook"
-    fi
+  for hook in "$hooks_dir"/*.sh; do
+    [ -f "$hook" ] || continue
+    echo "Running ➡ $hook"
+    bash "$hook" || echo "Hook failed ➡ $hook"
   done
 fi
 set -e
