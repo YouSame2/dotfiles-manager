@@ -172,7 +172,7 @@ I'm assuming you already have a dotfiles repo setup.
 
 Add any homebrew recipes and any choco packages you would like to install in the sync process to `$DOTFILES/bootstrap/mac/brewfile` & `$DOTFILES/bootstrap/windows/packages.config` respectively. **Do not** remove any.
 
-Add any additional commands/plugins you would like to install with the sync process to the bottom of `$DOTFILES/sync.sh` under 'echo "------- Syncing plugins..."' or place them in `$DOTFILES/bootstrap/extras-sync.sh` (the sync script will source this file if present).
+Add any additional commands/plugins you would like to install with the sync process to the bottom of `$DOTFILES/sync.sh` under 'echo "------- Syncing plugins..."' or place them as executable scripts in `$DOTFILES/sync/` (the sync script will run or source any files in that folder).
 
 > [!NOTE]
 > Check out my personal [dotfiles](https://github.com/YouSame2/dotfiles-public) for ideas/references.
@@ -255,8 +255,9 @@ Ight i'll make this quick cuz I'm tired of writing, but I get that this can be a
    - homebrew recipes go in ➡ ./bootstrap/mac/brewfile
    - choco installs go in ➡ ./bootstrap/windows/package.config
 
-- custom commands/plugins go in ➡ ./bootstrap/customs.sh
-- sync-specific extras may be placed in ➡ ./bootstrap/extras-sync.sh (optional)
+-- custom commands/plugins go in ➡ ./bootstrap/customs.sh
+
+- sync-specific extras or hooks may be placed in ➡ ./sync/ (executable files will be run; non-executable files will be sourced)
   > [!TIP]
   > Currently no method of matching brew recipes with choco installs. Next time you're installing a package just copy both, paste in `bootstrap/`, then run `dotfiles sync`. 👍🏽
 
