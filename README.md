@@ -155,7 +155,7 @@ I'm assuming you already have a dotfiles repo setup.
    ```shell
    # does not overright folders/files only adds non existing
    # if you want to use your own install.conf.yaml omit last file from cp
-   cp -r dotfiles-manager/.config dotfiles-manager/bootstrap dotfiles-manager/install.conf.yaml .
+   cp -r dotfiles-manager/.config dotfiles-manager/bootstrap dotfiles-manager/install.conf.yaml dotfiles-manager/sync .
    ```
 
 5. Add $DOTFILES env to .global-rc
