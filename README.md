@@ -15,7 +15,7 @@
 
 
 # 🛫 Overview: What the Skibidi is it?
-Simple cross-platform (Mac and Windows) dotfiles manager CLI built on top of dotbot. Lets you have a consistent dev environment by bootstrapping and automatically adding dotfile symlinks to your computers from within the terminal, think GNU Stow (kinda?) but works on windows too!
+Simple cross-platform (Mac and Windows) dotfiles manager CLI built on top of dotbot. Lets you have a consistent dev environment by syncing and automatically adding dotfile symlinks to your computers from within the terminal, think GNU Stow (kinda?) but works on windows too!
 
 Soooo... use cases kinda like this:
 
@@ -40,9 +40,9 @@ Soooo... use cases kinda like this:
 - add to your .global_rc/.global_aliases file: `alias ls='eza --color=always --icons=always'`
 - run `dotfiles yeet` in terminal to ✈ YEET your dotfiles repo to remote (basically git push)
 - goto coffee shop (required ;P) and whip out your ***shiny*** mac
-- run `dotfiles yank` in mac terminal to *"GET OVAH-HERE"* your dotfiles (basically git pull). Then `dotfiles bootstrap` to add any new packages/fonts/plugins and link any new symlinks you may have added to your dotfiles!
+  - run `dotfiles yank` in mac terminal to *"GET OVAH-HERE"* your dotfiles (basically git pull). Then `dotfiles sync` to add any new packages/fonts/plugins and link any new symlinks you may have added to your dotfiles!
 > [!NOTE]
-> You can also just run `dotfiles link` to skip bootstrapping and just link symlinks. The decision to keep them separate commands instead of pulling on bootstrap is in case the user (🖐🏽 that's you) had some changes they didn't want to overwrite just yet.
+> You can also just run `dotfiles link` to skip syncing and just link symlinks. The decision to keep them separate commands instead of pulling on sync is in case the user (🖐🏽 that's you) had some changes they didn't want to overwrite just yet.
 
 # 🌟 Highlights
 Ok, i'll admit, this part sounds way to formal and *may* have been gpt-ed...
@@ -51,13 +51,13 @@ Ok, i'll admit, this part sounds way to formal and *may* have been gpt-ed...
 
 - OS-Specific Symlinks: Define macOS or Windows-specific symlinks for platform-dependent configurations.
 
-- Integrated Bootstrapping: Automatically install fonts, package managers, packages, and tools tailored to macOS or Windows environments.
+- Integrated Sync: Automatically install fonts, package managers, packages, and tools tailored to macOS or Windows environments.
 
 - Backup current homebrew/choco packages directly to your dotfiles.
 
 - Cross-Platform Support: Aimed at users who frequently switch between macOS and Windows without relying on WSL2.
 
-- Customizable Bootstrapping: Extend the bootstrapping process to install additional plugins or packages.
+- Customizable Sync: Extend the sync process to install additional plugins or packages.
 
 > [!IMPORTANT]
 > For windows you must be using git bash. Cygwin and other emulators might work, but I didn't test them. Probably will require 1 or 2 changes in some if statements.
@@ -106,7 +106,7 @@ Make sure the following are installed on your systems
 
 <details>
   <summary>Others</summary>
-  The following are needed but get installed during the bootstrap process so you don't need to install them separately.
+  The following are needed but get installed during the sync process so you don't need to install them separately.
 
   - Homebrew
   - Homebrew/bundle
@@ -162,33 +162,33 @@ I'm assuming you already have a dotfiles repo setup.
 
    If they are different on each pc, delete the entry from .global-rc and set the export in each .bashrc & .zshrc respectively. Ignore this if you already have the env var setup. Then follow one of the below 
 
-6. Add additional packages/commands to bootstrap (optional)
+6. Add additional packages/commands to sync (optional)
 
-   Add any homebrew recipes and any choco packages you would like to install in the bootstrap process to `$DOTFILES/bootstrap/mac/brewfile` & `$DOTFILES/bootstrap/windows/packages.config` respectively. **Do not** remove any.
+  Add any homebrew recipes and any choco packages you would like to install in the sync process to `$DOTFILES/bootstrap/mac/brewfile` & `$DOTFILES/bootstrap/windows/packages.config` respectively. **Do not** remove any.
 
-   Add any additional commands/plugins you would like to install with the bootstrap process to the bottom of `$DOTFILES/bootstrap/bootstrap.sh` under 'echo "------- Bootstrapping plugins..."'
+  Add any additional commands/plugins you would like to install with the sync process to the bottom of `$DOTFILES/sync.sh` under 'echo "------- Syncing plugins..."' or place them in `$DOTFILES/bootstrap/extras-sync.sh` (the sync script will source this file if present).
 
   > [!NOTE]
   > Check out my personal [dotfiles](https://github.com/YouSame2/dotfiles-public) for ideas/references.
 
-7. Run bootstrap
+7. Run sync
 
-   Restart your preferred terminal (not powershell you freak!), and run `dotfiles bootstrap` to begin installing packages, running bootstrap commands, and finally running through your dotbot playbook (install.conf.yaml).
+  Restart your preferred terminal (not powershell you freak!), and run `dotfiles sync` to begin installing packages, running sync commands, and finally running through your dotbot playbook (install.conf.yaml).
 
-   Running this initially is necessary to install required packages for dotfiles add to work properly.
+  Running this initially is necessary to install required packages for dotfiles add to work properly.
 
 One final note: if you don’t want to keep copies of the templates in the submodule to avoid confusion, you could achieve this without adding the submodule. However, at that point, you likely already know what you’re doing.
     
 ### Recommended Setup
 
-Ofcourse dotfiles manager will work for just managing your dotfiles and bootstrapping even if you don't want cross platform support. But to truly synchronize your dev environment across mac and windows here is the recommended setup a.k.a. how i use it.
+Ofcourse dotfiles manager will work for just managing your dotfiles and syncing even if you don't want cross platform support. But to truly synchronize your dev environment across mac and windows here is the recommended setup a.k.a. how i use it.
 
 Obviously you're going to want to use cross platform packages as much as possible so starting top down:
 - **Terminal Emulator:** Wezterm
 - **Shell:** Git Bash on Windows, Zsh or Bash on Mac (I prefer Zsh but if you truly want the same env go with bash)
 - **Prompt:** Not needed but i prefer Starship
-- **Package Managers:** Use brew and choco as much as possible. The caveat is (currently) I have no way of syncing packages across brew and choco. So anytime im going to add a new package i just copy both brew and choco installs and add it to the respective backup file in bootstrap/
-- **Fonts:** Add any fonts you want into bootstrap/fonts
+- **Package Managers:** Use brew and choco as much as possible. The caveat is (currently) I have no way of syncing packages across brew and choco. So anytime im going to add a new package i just copy both brew and choco installs and add it to the respective backup file in `bootstrap/`.
+- **Fonts:** Add any fonts you want into `bootstrap/fonts`
 - **Editor:** Duh...
 
 # 🧠 Usage
@@ -205,7 +205,7 @@ Obviously you're going to want to use cross platform packages as much as possibl
 | `yeet`          | Add all changes, commit, and push to the remote repository. Any [options] that come after yeet get passed straight to `git commit` as args. Note -m option for `add` does not apply to `yeet` and instead gets interpreted by git as a commit message. If no args are passed, the commit message defaults to 'YEET dotfiles'.|
 | `yank`          | Pull the latest changes from the remote dotfiles repository.|
 | `-h`<br>`--help`  | Display the help message. Basically what you're reading rn.|
-| `bootstrap`          | *WORK IN PROGRESS* |
+| `sync`          | *WORK IN PROGRESS* |
 | `backup`          | *WORK IN PROGRESS* |
 
 **Examples**
@@ -243,13 +243,14 @@ Ight i'll make this quick cuz I'm tired of writing, but I get that this can be a
 5. Windows only sourcing add to .bashrc
 6. Think of the root of your dotfiles folder as `~` whatever you `dotfiles add` will get placed in there with the respective relative path from `~` (*unless* you manually add it to install.conf.yaml for more complex symlinks)
    - custom dotbot symlinking/playbooking add in ➡ ./install.conf.yaml
-7. Bootstrap/ folder is important. This contains all the brew/choco recipes, fonts, and other commands you want to get executed/bootstrapped when you run `dotfiles bootstrap` or backed up in `dotfiles backup`
+7. `bootstrap/` folder is important. This contains all the brew/choco recipes, fonts, and other commands you want to get executed when you run `dotfiles sync` or backed up in `dotfiles backup`
    - fonts go in ➡ ./bootstrap/fonts
    - homebrew recipes go in ➡ ./bootstrap/mac/brewfile
    - choco installs go in ➡ ./bootstrap/windows/package.config
-   - custom commands/plugins go in ➡ ./bootstrap/customs.sh
+  - custom commands/plugins go in ➡ ./bootstrap/customs.sh
+  - sync-specific extras may be placed in ➡ ./bootstrap/extras-sync.sh (optional)
    > [!TIP]
-   > Currently no method of matching brew recipes with choco installs. Next time you're installing a package just copy both, paste in bootstrap, then run dotfiles bootstrap. 👍🏽
+  > Currently no method of matching brew recipes with choco installs. Next time you're installing a package just copy both, paste in `bootstrap/`, then run `dotfiles sync`. 👍🏽
 
 # 🙋🏽‍♂️ FAQ
 - **How do I update dotfiles-manager submodule?**
@@ -295,7 +296,7 @@ Clone ➡ New Branch ➡ PR
 - [x] add if statements for os specific symlinks
 - [x] separate personal dotfiles
 - [x] refactor project to be a submodule for easy integration
-- [x] dotfiles bootstrap option
+- [x] dotfiles sync option
 - [x] dotfiles backup option
 - [ ] match brew installs with corresponding choco install
 - [ ] when adding a file/folder with no OS_FLAG (i.e. 'dotfiles add .config') in 'install.conf.yaml', if that file/folder already had an if statement the if statement won't get removed. This can lead to some unexpected behavior in rare situations. I'm probably not going to deal with it since it's niche, but feel free for a simple contribution if you want.

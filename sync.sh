@@ -184,7 +184,7 @@ fi
 ####################
 
 set +e
-extras_file="$DOTFILES"/bootstrap/extras.sh
+extras_file="$DOTFILES"/bootstrap/extras-sync.sh
 [[ -e "$extras_file" ]] &&
   echo "------- Bootstrapping extras..." &&
   . "$extras_file"
