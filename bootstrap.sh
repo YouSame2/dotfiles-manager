@@ -2,8 +2,7 @@
 
 set -e
 
-# Check OS
-OS=$(uname -o)
+# OS and OS_TYPE are expected to be set by `dotfiles.sh` (sourced)
 
 echo "------- Running bootstrap..."
 

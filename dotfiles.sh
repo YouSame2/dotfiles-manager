@@ -12,6 +12,8 @@ source "$DOTFILES"/.config/global-rc/.global-aliases
 source "$DOTFILES"/.config/global-rc/.global-rc
 # CONTRIBUTE: i couldnt find any other way to access my shell functions without sourcing this file. has something to do with interactive shell vs subshell. if anyone knows how to allow this subshell script to access .bashrc or .zshrc functions without sourcing let me know!
 
+OS=$(uname -o 2>/dev/null || uname -s)
+
 usage() {
   echo "Usage: dotfiles <command> [options] <target>"
   echo ""
@@ -50,9 +52,6 @@ usage() {
 }
 
 check_admin() {
-  # Check OS
-  OS=$(uname -o)
-
   [[ ! "$OS" =~ Cygwin|Msys|MinGW ]] && return 0
 
   net session &>/dev/null || {
@@ -141,9 +140,6 @@ elif [[ "$MODE" == "bootstrap" ]]; then
   exit 0
 
 elif [[ "$MODE" == "backup" ]]; then
-  # Check OS
-  OS=$(uname -o)
-
   # Mac backup:
   if [[ "$OS" = Darwin ]]; then
     echo "------- Backing up Mac HomeBrew recipes..."

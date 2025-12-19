@@ -5,8 +5,7 @@
 # Global extras:
 # ya pack -a yazi-rs/plugins:git # an example
 
-# Check OS
-OS=$(uname -o)
+# OS and OS_TYPE are expected to be set by `dotfiles.sh` (sourced)
 
 # windows part
 if [[ "$OS" =~ Cygwin|Msys|MinGW ]]; then
