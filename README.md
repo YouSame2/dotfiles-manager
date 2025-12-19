@@ -211,8 +211,9 @@ Obviously you're going to want to use cross platform packages as much as possibl
 | `yeet`           | Add all changes, commit, and push to the remote repository. Any [options] that come after yeet get passed straight to `git commit` as args. Note -m option for `add` does not apply to `yeet` and instead gets interpreted by git as a commit message. If no args are passed, the commit message defaults to 'YEET dotfiles'. |
 | `yank`           | Pull the latest changes from the remote dotfiles repository.                                                                                                                                                                                                                                                                  |
 | `-h`<br>`--help` | Display the help message. Basically what you're reading rn.                                                                                                                                                                                                                                                                   |
-| `sync`           | _WORK IN PROGRESS_                                                                                                                                                                                                                                                                                                            |
-| `backup`         | _WORK IN PROGRESS_                                                                                                                                                                                                                                                                                                            |
+| `sync`           | Run the sync operation to install dependencies and configure the system.                                                                                                                                                                                                                                                      |
+| `bootstrap`      | Run OS-specific bootstrap scripts (from `bootstrap/mac/` or `bootstrap/windows/`), then universal bootstrap scripts (from `bootstrap/*.sh`).                                                                                                                                                                                  |
+| `backup`         | Backup system-specific configurations (Mac: Homebrew packages, Win: Choco packages).                                                                                                                                                                                                                                          |
 
 **Examples**
 
@@ -254,8 +255,8 @@ Ight i'll make this quick cuz I'm tired of writing, but I get that this can be a
    - fonts go in ➡ ./bootstrap/fonts
    - homebrew recipes go in ➡ ./bootstrap/mac/brewfile
    - choco installs go in ➡ ./bootstrap/windows/package.config
-
--- custom commands/plugins go in ➡ ./bootstrap/customs.sh
+   - OS-specific bootstrap scripts go in ➡ ./bootstrap/mac/_.sh (macOS) or ./bootstrap/windows/_.sh (Windows)
+   - universal bootstrap scripts (run on all platforms) go in ➡ ./bootstrap/\*.sh
 
 - sync-specific extras or hooks may be placed in ➡ ./sync/ (executable files will be run; non-executable files will be sourced)
   > [!TIP]
