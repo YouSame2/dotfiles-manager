@@ -128,7 +128,7 @@ elif [[ "$MODE" == "yank" ]]; then
 
 elif [[ "$MODE" == "sync" ]]; then
   check_admin
-  . "$DOTFILES"/sync.sh
+  . "$DOTFILES"/dotfiles-manager/sync.sh
   exit 0
 
 ##########################
@@ -137,7 +137,7 @@ elif [[ "$MODE" == "sync" ]]; then
 
 elif [[ "$MODE" == "bootstrap" ]]; then
   check_admin
-  . "$DOTFILES"/bootstrap.sh
+  . "$DOTFILES"/dotfiles-manager/bootstrap.sh
   exit 0
 
 elif [[ "$MODE" == "backup" ]]; then
