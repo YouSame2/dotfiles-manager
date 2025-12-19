@@ -25,7 +25,7 @@ usage() {
   echo ""
   echo "  yank            Pull the latest changes from the remote dotfiles repository."
   echo ""
-  echo "  bootstrap       Run the bootstrap script to install dependencies and configure the system."
+  echo "  sync, sync-packages    Run the sync operation to install dependencies and configure the system."
   echo ""
   echo "  backup          Backup system-specific configurations (Mac: Homebrew packages, Win: Choco packages)."
   echo ""
@@ -64,11 +64,15 @@ OS_FLAG="u"
 TARGET=""
 
 case "$1" in
-add | link | yeet | yank | bootstrap | backup)
+add | link | yeet | yank | backup)
   MODE=$1
   shift # Remove the first argument after processing. idk this b4
   ;;
--h | --h | --help)
+sync | sync-packages)
+  MODE=bootstrap
+  shift
+  ;;
+h | --h | --help)
   usage
   ;;
 *)
