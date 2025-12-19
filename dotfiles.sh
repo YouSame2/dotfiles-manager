@@ -150,6 +150,15 @@ elif [[ "$MODE" == "backup" ]]; then
     echo "------- Backing up Windows Choco packages..."
     choco export -o="$DOTFILES"/bootstrap/windows/packages.config
 
+  # Linux (Arch) backup:
+  elif [[ "$OS" = GNU/Linux ]] || [[ "$OS" = Linux ]]; then
+    echo "------- Backing up pacman packages..."
+    mkdir -p "$DOTFILES/bootstrap/linux"
+    # Official repo packages (explicit, excluding AUR/foreign)
+    pacman -Qqe | grep -Fxv -f <(pacman -Qqm) >"$DOTFILES"/bootstrap/linux/pacman-packages.txt || true
+    # AUR / foreign packages
+    pacman -Qqm >"$DOTFILES"/bootstrap/linux/aur-packages.txt || true
+
   else
     echo "Unsupported OS detected: $OS"
     exit 1

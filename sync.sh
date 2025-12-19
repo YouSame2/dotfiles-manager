@@ -98,10 +98,53 @@ if [[ "$OS" = Darwin ]]; then
   }
 
 ####################
+# LINUX (pacman / AUR)
+####################
+
+elif [[ "$OS" = GNU/Linux ]] || [[ "$OS" = Linux ]]; then
+  echo ""
+  echo "------- Bootstrapping Linux (pacman/AUR)..."
+
+  # Check for pacman
+  if ! command -v pacman &>/dev/null; then
+    echo "pacman not found. Skipping Linux package installation."
+  else
+    PACMAN_LIST="$DOTFILES/bootstrap/linux/pacman-packages.txt"
+    AUR_LIST="$DOTFILES/bootstrap/linux/aur-packages.txt"
+
+    if [ -f "$PACMAN_LIST" ]; then
+      echo "Installing pacman packages from $PACMAN_LIST"
+      sudo pacman -Syu --needed --noconfirm $(grep -v '^#' "$PACMAN_LIST" | tr '\n' ' ') || echo "Some pacman installs failed"
+    else
+      echo "No pacman package list found at $PACMAN_LIST. Skipping official packages."
+    fi
+
+    # Find an AUR helper if available
+    AUR_HELPER=""
+    for helper in yay paru; do
+      if command -v "$helper" &>/dev/null; then
+        AUR_HELPER="$helper"
+        break
+      fi
+    done
+
+    if [ -f "$AUR_LIST" ]; then
+      if [ -n "$AUR_HELPER" ]; then
+        echo "Installing AUR packages using $AUR_HELPER from $AUR_LIST"
+        $AUR_HELPER -S --needed --noconfirm $(grep -v '^#' "$AUR_LIST" | tr '\n' ' ') || echo "Some AUR installs failed"
+      else
+        echo "AUR package list exists but no AUR helper (yay/paru) found. Please install one and re-run."
+      fi
+    else
+      echo "No AUR package list found at $AUR_LIST. Skipping AUR packages."
+    fi
+  fi
+
+####################
 # WINDOWS
 ####################
 
-# TODO: add winget and its packages to bootstrap (eza,yazi)
+  # TODO: add winget and its packages to bootstrap (eza,yazi)
 
 elif [[ "$OS" =~ Cygwin|Msys|MinGW ]]; then
   echo ""
