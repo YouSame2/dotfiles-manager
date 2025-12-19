@@ -185,7 +185,7 @@ elif [[ "$MODE" == "backup" ]]; then
   done
 
   # Write the filtered list to the file
-  printf "%s\n" "${filtered_packages[@]}" >"$DOTFILES"/bootstrap/npm-packages.txt
+  printf "%s\n" "${filtered_packages[@]}" >"$DOTFILES"/sync/npm-packages.txt
 
   echo ""
   echo "Done. Don't forget to push new dotfiles changes using dotfiles yeet"

@@ -151,10 +151,10 @@ fi
 echo ""
 echo "------- Bootstrapping NPM global packages..."
 
-NPM_PACKAGES_FILE="$DOTFILES/bootstrap/npm-packages.txt"
+NPM_PACKAGES_FILE="$DOTFILES/sync/npm-packages.txt"
 
 if [ ! -f "$NPM_PACKAGES_FILE" ]; then
-  echo "npm-packages.txt not found in $DOTFILES/bootstrap/. Skipping global npm package installation."
+  echo "npm-packages.txt not found in $DOTFILES/sync/. Skipping global npm package installation."
 
 # Check if npm is installed
 elif ! command -v npm &>/dev/null; then

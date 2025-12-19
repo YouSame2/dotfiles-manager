@@ -172,6 +172,8 @@ I'm assuming you already have a dotfiles repo setup.
 
 Add any homebrew recipes and any choco packages you would like to install in the sync process to `$DOTFILES/bootstrap/mac/brewfile` & `$DOTFILES/bootstrap/windows/packages.config` respectively. **Do not** remove any.
 
+Add any npm global packages to `$DOTFILES/sync/npm-packages.txt` (one package per line).
+
 Add any additional commands/plugins you would like to install with the sync process to the bottom of `$DOTFILES/sync.sh` under 'echo "------- Syncing plugins..."' or place them as executable scripts in `$DOTFILES/sync/` (the sync script will run or source any files in that folder).
 
 > [!NOTE]
@@ -257,10 +259,11 @@ Ight i'll make this quick cuz I'm tired of writing, but I get that this can be a
    - choco installs go in ➡ ./bootstrap/windows/package.config
    - OS-specific bootstrap scripts go in ➡ ./bootstrap/mac/_.sh (macOS) or ./bootstrap/windows/_.sh (Windows)
    - universal bootstrap scripts (run on all platforms) go in ➡ ./bootstrap/\*.sh
-
-- sync-specific extras or hooks may be placed in ➡ ./sync/ (executable files will be run; non-executable files will be sourced)
-  > [!TIP]
-  > Currently no method of matching brew recipes with choco installs. Next time you're installing a package just copy both, paste in `bootstrap/`, then run `dotfiles sync`. 👍🏽
+8. `sync/` folder contains sync-specific files:
+   - npm global packages list ➡ ./sync/npm-packages.txt (one package per line)
+   - custom sync extras or hooks ➡ ./sync/ (executable files will be run; non-executable files will be sourced)
+     > [!TIP]
+     > Currently no method of matching brew recipes with choco installs. Next time you're installing a package just copy both, paste in `bootstrap/`, then run `dotfiles sync`. 👍🏽
 
 # 🙋🏽‍♂️ FAQ
 
