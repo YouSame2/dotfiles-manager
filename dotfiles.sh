@@ -27,6 +27,8 @@ usage() {
   echo ""
   echo "  sync, sync-packages    Run the sync operation to install dependencies and configure the system."
   echo ""
+  echo "  bootstrap       Run OS-specific and universal bootstrap scripts from bootstrap/ directory."
+  echo ""
   echo "  backup          Backup system-specific configurations (Mac: Homebrew packages, Win: Choco packages)."
   echo ""
   echo "Options for 'add':"
@@ -69,6 +71,10 @@ add | link | yeet | yank | backup)
   shift # Remove the first argument after processing. idk this b4
   ;;
 sync | sync-packages)
+  MODE=sync
+  shift
+  ;;
+bootstrap)
   MODE=bootstrap
   shift
   ;;
@@ -117,12 +123,21 @@ elif [[ "$MODE" == "yank" ]]; then
 #     exit 0
 
 ##########################
+# sync functionality
+##########################
+
+elif [[ "$MODE" == "sync" ]]; then
+  check_admin
+  . "$DOTFILES"/sync.sh
+  exit 0
+
+##########################
 # bootstrap functionality
 ##########################
 
 elif [[ "$MODE" == "bootstrap" ]]; then
   check_admin
-  . "$DOTFILES"/sync.sh
+  . "$DOTFILES"/bootstrap.sh
   exit 0
 
 elif [[ "$MODE" == "backup" ]]; then
