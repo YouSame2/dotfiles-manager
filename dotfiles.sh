@@ -36,6 +36,7 @@ usage() {
   echo "Options for 'add':"
   echo "  -m              Set the target symlink to apply only on macOS."
   echo "  -w              Set the target symlink to apply only on Windows."
+  echo "  -l              Set the target symlink to apply only on Linux."
   echo ""
   echo "General Options:"
   echo "  -h, --help      Display this help message."
@@ -214,6 +215,10 @@ elif [[ "$MODE" == "add" ]]; then
       OS_FLAG="w"
       shift
       ;;
+    -l)
+      OS_FLAG="l"
+      shift
+      ;;
     -h | --h | --help)
       usage
       ;;
@@ -279,11 +284,15 @@ elif [[ "$MODE" == "add" ]]; then
 
     # handle OS_FLAGS
     if [[ $OS_FLAG == "w" ]]; then
-      KEY_DEST="$LINK_DESTINATION" yq -i '(.[] | select(.link).link.[strenv(KEY_DEST)]).if = "[ `uname` != Darwin ]"' "$INSTALL_FILE"
       # CONTRIBUTE: I searched for a FULL DAY to figure out a way to detect windows in dotbot. i tried EVERY PERMUTATION, and trust me the only way is to check if its not mac... If any1 figures this out plz lmk. it actually pissed me off.
+      KEY_DEST="$LINK_DESTINATION" yq -i '(.[] | select(.link).link.[strenv(KEY_DEST)]).if = "[ \`uname -o\` = Msys ] || [ \`uname -o\` = Cygwin ] || [ \`uname -o\` = MinGW ]"' "$INSTALL_FILE"
+
+    elif [[ $OS_FLAG == "l" ]]; then
+      # Linux-specific
+      KEY_DEST="$LINK_DESTINATION" yq -i '(.[] | select(.link).link.[strenv(KEY_DEST)]).if = "[ \`uname -o\` = GNU/Linux ]"' "$INSTALL_FILE"
 
     elif [[ $OS_FLAG == "m" ]]; then
-      KEY_DEST="$LINK_DESTINATION" yq -i '(.[] | select(.link).link.[strenv(KEY_DEST)]).if = "[ `uname` = Darwin ]"' "$INSTALL_FILE"
+      KEY_DEST="$LINK_DESTINATION" yq -i '(.[] | select(.link).link.[strenv(KEY_DEST)]).if = "[ \`uname\` = Darwin ]"' "$INSTALL_FILE"
       # CONTRIBUTE: when adding file/folder with no OS_FLAG (i.e. 'dotfiles add .config') in 'install.conf.yaml', if that file/folder already had an if statement the if statement wont get removed. this can lead so some unexpected behavior in rare situations. Im probably not going to deal with it since its niche, but feel free for a simple contribution if u want.
     fi
   }
