@@ -12,6 +12,7 @@ set -e
 install_fonts() {
   if [ -d "$DOTFILES/bootstrap/fonts" ]; then
     echo "------- Bootstrapping fonts from $DOTFILES/bootstrap/fonts directory..."
+    INSTALLED=0
     for font in "$DOTFILES"/bootstrap/fonts/*; do
       if [ -f "$font" ]; then
 
@@ -20,6 +21,7 @@ install_fonts() {
           if [[ ! -f "C:/Windows/Fonts/$(basename "$font")" ]]; then
             cp "$font" 'C:/Windows/Fonts/' &&
               echo "Successfully installed ➡ $font" || echo "Failed to install ➡ $font"
+            INSTALLED=1
           else
             echo "Already installed ➡ ($(basename "$font"))"
           fi
@@ -29,15 +31,35 @@ install_fonts() {
           if [[ ! -f "$HOME/Library/Fonts/$(basename "$font")" ]]; then
             cp "$font" ~/Library/Fonts/ &&
               echo "Successfully installed ➡ $font" || echo "Failed to install ➡ $font"
+            INSTALLED=1
           else
             echo "Already installed ➡ ($(basename "$font"))"
           fi
+
+        # linux part
+        elif [[ "$OS" = GNU/Linux ]] || [[ "$OS" = Linux ]]; then
+          TARGET_DIR="$HOME/.local/share/fonts"
+          mkdir -p "$TARGET_DIR"
+          if [[ ! -f "$TARGET_DIR/$(basename "$font")" ]]; then
+            cp "$font" "$TARGET_DIR/" &&
+              echo "Successfully installed ➡ $font" || echo "Failed to install ➡ $font"
+            INSTALLED=1
+          else
+            echo "Already installed ➡ ($(basename "$font"))"
+          fi
+
         else
           echo "Unsupported OS detected: $OS"
           exit 1
         fi
       fi
     done
+
+    # refresh font cache on Linux if any fonts were installed
+    if ([[ "$OS" = GNU/Linux ]] || [[ "$OS" = Linux ]]) && [[ $INSTALLED -gt 0 ]]; then
+      echo "Refreshing font cache..."
+      fc-cache -f -v "$HOME/.local/share/fonts" || true
+    fi
   else
     echo "Fonts directory $DOTFILES/bootstrap/fonts not found or no fonts. Skipping font installation."
   fi
