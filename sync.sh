@@ -162,6 +162,31 @@ elif [[ "$OS" = GNU/Linux ]] || [[ "$OS" = Linux ]]; then
     fi
   fi
 
+  # Install fnm via AUR helper only (yay/paru). If no helper present, skip.
+  if command -v fnm >/dev/null 2>&1; then
+    echo "fnm found, skipping fnm install"
+  else
+    if [ -n "$AUR_HELPER" ]; then
+      echo "Installing fnm from AUR using $AUR_HELPER..."
+      # prefer the package name 'fnm' from AUR; some users may prefer 'fnm-bin'
+      $AUR_HELPER -S --needed --noconfirm fnm || $AUR_HELPER -S --needed --noconfirm fnm-bin || echo "Failed to install fnm via $AUR_HELPER"
+    else
+      echo "No AUR helper (yay/paru) found — skipping fnm install on Linux"
+    fi
+  fi
+
+  # Install Node using fnm if node not present
+  if command -v node >/dev/null 2>&1; then
+    echo "node found, skipping Node installation"
+  else
+    if command -v fnm >/dev/null 2>&1; then
+      echo "Installing Node.js v22 via fnm..."
+      fnm install 22 || echo "fnm failed to install Node.js — run 'fnm install 22' manually"
+    else
+      echo "fnm not available — skipping automatic Node installation"
+    fi
+  fi
+
 ####################
 # WINDOWS
 ####################
