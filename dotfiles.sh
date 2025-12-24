@@ -282,17 +282,20 @@ elif [[ "$MODE" == "add" ]]; then
         exit 1
       }
 
-    # handle OS_FLAGS
+    # handle OS_FLAGS  
+    # Note: dotbot runs 'if' conditionals in the system's default shell:
+    #   - Unix/Mac: Uses $SHELL environment variable (bash/zsh)
+    #   - Windows: Uses cmd.exe (not bash, even with Git Bash installed)
     if [[ $OS_FLAG == "w" ]]; then
-      # CONTRIBUTE: I searched for a FULL DAY to figure out a way to detect windows in dotbot. i tried EVERY PERMUTATION, and trust me the only way is to check if its not mac... If any1 figures this out plz lmk. it actually pissed me off.
-      KEY_DEST="$LINK_DESTINATION" yq -i '(.[] | select(.link).link.[strenv(KEY_DEST)]).if = "[ `uname -o` = Msys ] || [ `uname -o` = Cygwin ] || [ `uname -o` = MinGW ]"' "$INSTALL_FILE"
+      # Windows detection: Use cmd /c to check if we're on Windows (cmd only exists on Windows)
+      KEY_DEST="$LINK_DESTINATION" yq -i '(.[] | select(.link).link.[strenv(KEY_DEST)]).if = "cmd /c \"exit 0\""' "$INSTALL_FILE"
 
     elif [[ $OS_FLAG == "l" ]]; then
       # Linux-specific
-      KEY_DEST="$LINK_DESTINATION" yq -i '(.[] | select(.link).link.[strenv(KEY_DEST)]).if = "[ `uname -o` = GNU/Linux ]"' "$INSTALL_FILE"
+      KEY_DEST="$LINK_DESTINATION" yq -i '(.[] | select(.link).link.[strenv(KEY_DEST)]).if = "[ uname -o) = GNU/Linux ]"' "$INSTALL_FILE"
 
     elif [[ $OS_FLAG == "m" ]]; then
-      KEY_DEST="$LINK_DESTINATION" yq -i '(.[] | select(.link).link.[strenv(KEY_DEST)]).if = "[ `uname` = Darwin ]"' "$INSTALL_FILE"
+      KEY_DEST="$LINK_DESTINATION" yq -i '(.[] | select(.link).link.[strenv(KEY_DEST)]).if = "[ uname -o = Darwin ]"' "$INSTALL_FILE"
       # CONTRIBUTE: when adding file/folder with no OS_FLAG (i.e. 'dotfiles add .config') in 'install.conf.yaml', if that file/folder already had an if statement the if statement wont get removed. this can lead so some unexpected behavior in rare situations. Im probably not going to deal with it since its niche, but feel free for a simple contribution if u want.
     fi
   }
