@@ -34,9 +34,9 @@ usage() {
   echo "  backup          Backup system-specific configurations (Mac: Homebrew packages, Win: Choco packages)."
   echo ""
   echo "Options for 'add':"
-  echo "  -m              Set the target symlink to apply only on macOS."
-  echo "  -w              Set the target symlink to apply only on Windows."
-  echo "  -l              Set the target symlink to apply only on Linux."
+  echo "  -m              Set the target symlink to apply on macOS (can be combined with -w, -l)."
+  echo "  -w              Set the target symlink to apply on Windows (can be combined with -m, -l)."
+  echo "  -l              Set the target symlink to apply on Linux (can be combined with -m, -w)."
   echo ""
   echo "General Options:"
   echo "  -h, --help      Display this help message."
@@ -45,6 +45,7 @@ usage() {
   echo "  dotfiles add config.lua          Add 'my_config' and configure it for all platforms."
   echo "  dotfiles add -m config.lua       Add 'my_config' and configure it for macOS only."
   echo "  dotfiles add -w config.lua       Add 'my_config' and configure it for Windows only."
+  echo "  dotfiles add -m -l config.lua    Add 'my_config' for macOS and Linux only."
   echo "  dotfiles link                   Ensure all symlinks are created or updated."
   echo "  dotfiles yeet                   Commit all changes with the default message and push."
   echo "  dotfiles yeet -m 'Fix issue'    Commit all changes with custom git commit args and push."
@@ -62,7 +63,7 @@ check_admin() {
 }
 
 MODE=""
-OS_FLAG="u"
+OS_FLAGS=()
 TARGET=""
 
 case "$1" in
@@ -208,15 +209,15 @@ elif [[ "$MODE" == "add" ]]; then
   while [[ $# -gt 0 ]]; do
     case $1 in
     -m)
-      OS_FLAG="m"
+      OS_FLAGS+=("m")
       shift
       ;;
     -w)
-      OS_FLAG="w"
+      OS_FLAGS+=("w")
       shift
       ;;
     -l)
-      OS_FLAG="l"
+      OS_FLAGS+=("l")
       shift
       ;;
     -h | --h | --help)
@@ -286,16 +287,38 @@ elif [[ "$MODE" == "add" ]]; then
     # Note: dotbot runs 'if' conditionals in the system's default shell:
     #   - Unix/Mac: Uses $SHELL environment variable (bash/zsh)
     #   - Windows: Uses cmd.exe (not bash, even with Git Bash installed)
-    if [[ $OS_FLAG == "w" ]]; then
-      # Windows detection: Use cmd /c to check if we're on Windows (cmd only exists on Windows)
-      KEY_DEST="$LINK_DESTINATION" yq -i '(.[] | select(.link).link.[strenv(KEY_DEST)]).if = "cmd /c \"exit 0\""' "$INSTALL_FILE"
-
-    elif [[ $OS_FLAG == "l" ]]; then
-      # Linux-specific
-      KEY_DEST="$LINK_DESTINATION" yq -i '(.[] | select(.link).link.[strenv(KEY_DEST)]).if = "[ uname -o) = GNU/Linux ]"' "$INSTALL_FILE"
-
-    elif [[ $OS_FLAG == "m" ]]; then
-      KEY_DEST="$LINK_DESTINATION" yq -i '(.[] | select(.link).link.[strenv(KEY_DEST)]).if = "[ uname -o = Darwin ]"' "$INSTALL_FILE"
+    if [[ ${#OS_FLAGS[@]} -gt 0 ]]; then
+      # Build conditional expression for multiple OS flags
+      CONDITIONS=()
+      
+      for flag in "${OS_FLAGS[@]}"; do
+        case $flag in
+        w)
+          # Windows detection: Use cmd /c to check if we're on Windows
+          CONDITIONS+=("cmd /c \"exit 0\"")
+          ;;
+        l)
+          # Linux-specific
+          CONDITIONS+=("[ \$(uname -o) = GNU/Linux ]")
+          ;;
+        m)
+          # macOS-specific
+          CONDITIONS+=("[ \$(uname -s) = Darwin ]")
+          ;;
+        esac
+      done
+      
+      # Combine conditions with OR logic using shell ||
+      if [[ ${#CONDITIONS[@]} -eq 1 ]]; then
+        FINAL_CONDITION="${CONDITIONS[0]}"
+      else
+        FINAL_CONDITION="${CONDITIONS[0]}"
+        for ((i=1; i<${#CONDITIONS[@]}; i++)); do
+          FINAL_CONDITION="$FINAL_CONDITION || ${CONDITIONS[i]}"
+        done
+      fi
+      
+      KEY_DEST="$LINK_DESTINATION" CONDITION="$FINAL_CONDITION" yq -i '(.[] | select(.link).link.[strenv(KEY_DEST)]).if = strenv(CONDITION)' "$INSTALL_FILE"
       # CONTRIBUTE: when adding file/folder with no OS_FLAG (i.e. 'dotfiles add .config') in 'install.conf.yaml', if that file/folder already had an if statement the if statement wont get removed. this can lead so some unexpected behavior in rare situations. Im probably not going to deal with it since its niche, but feel free for a simple contribution if u want.
     fi
   }
