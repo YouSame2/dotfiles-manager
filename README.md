@@ -4,11 +4,12 @@
 - [🌟 Highlights](#-highlights)
 - [💭 Why Use it](#-why-use-it)
 - [🚀 Getting Started](#-getting-started)
-    - [Dependencies](#dependencies)
-    - [Installation:](#installation)
-    - [Recommended Setup](#recommended-setup)
+  - [Dependencies](#dependencies)
+  - [Installation:](#installation)
+  - [Recommended Setup](#recommended-setup)
 - [🧠 Usage](#-usage)
 - [💥 What to Put Where](#-what-to-put-where)
+  - [Linux-Specific Notes](#linux-specific-notes)
 - [🙋🏽‍♂️ FAQ](#️-faq)
 - [📖 Resources](#-resources)
 - [✏ Contributing](#-contributing)
@@ -209,14 +210,14 @@ Obviously you're going to want to use cross platform packages as much as possibl
 
 | Command          | Description                                                                                                                                                                                                                                                                                                                   |
 | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `add`            | Add a file or directory to the dotfiles repository and configure it for symlinking. Available options:<br>`-m`: Set the target symlink to apply only on macOS.<br>`-w`: Set the target symlink to apply only on Windows.<br>`-l`: Set the target symlink to apply only on Linux. |
+| `add`            | Add a file or directory to the dotfiles repository and configure it for symlinking. Available options:<br>`-m`: Set the target symlink to apply only on macOS.<br>`-w`: Set the target symlink to apply only on Windows.<br>`-l`: Set the target symlink to apply only on Linux.                                              |
 | `link`           | Rerun the dotbot configuration to ensure all symlinks are created or updated.                                                                                                                                                                                                                                                 |
 | `yeet`           | Add all changes, commit, and push to the remote repository. Any [options] that come after yeet get passed straight to `git commit` as args. Note -m option for `add` does not apply to `yeet` and instead gets interpreted by git as a commit message. If no args are passed, the commit message defaults to 'YEET dotfiles'. |
 | `yank`           | Pull the latest changes from the remote dotfiles repository.                                                                                                                                                                                                                                                                  |
 | `-h`<br>`--help` | Display the help message. Basically what you're reading rn.                                                                                                                                                                                                                                                                   |
 | `sync`           | Run the sync operation to install dependencies and configure the system.                                                                                                                                                                                                                                                      |
 | `bootstrap`      | Run OS-specific bootstrap scripts (from `bootstrap/mac/` or `bootstrap/windows/`), then universal bootstrap scripts (from `bootstrap/*.sh`).                                                                                                                                                                                  |
-| `backup`         | Backup system-specific configurations (macOS: Homebrew packages, Windows: Chocolatey packages, Linux/Arch: pacman & AUR package lists).                                                                                                                                                                                                                                          |
+| `backup`         | Backup system-specific configurations (macOS: Homebrew packages, Windows: Chocolatey packages, Linux/Arch: pacman & AUR package lists).                                                                                                                                                                                       |
 
 **Examples**
 
@@ -258,13 +259,15 @@ Ight i'll make this quick cuz I'm tired of writing, but I get that this can be a
 6. Think of the root of your dotfiles folder as `~` whatever you `dotfiles add` will get placed in there with the respective relative path from `~` (_unless_ you manually add it to install.conf.yaml for more complex symlinks)
    - custom dotbot symlinking/playbooking add in ➡ ./install.conf.yaml
 7. `bootstrap/` folder is important. This contains all the brew/choco recipes, fonts, and other commands you want to get executed when you run `dotfiles sync` or backed up in `dotfiles backup`
-  - fonts go in ➡ ./bootstrap/fonts
-  - homebrew recipes go in ➡ ./bootstrap/mac/Brewfile
-  - choco installs go in ➡ ./bootstrap/windows/packages.config
-  - **pacman packages go in ➡ ./bootstrap/linux/pacman-packages.txt**
-  - **AUR packages go in ➡ ./bootstrap/linux/aur-packages.txt**
-  - OS-specific bootstrap scripts go in ➡ ./bootstrap/mac/_.sh (macOS) or ./bootstrap/windows/_.sh (Windows)
-  - universal bootstrap scripts (run on all platforms) go in ➡ ./bootstrap/\*.sh
+
+- fonts go in ➡ ./bootstrap/fonts
+- homebrew recipes go in ➡ ./bootstrap/mac/Brewfile
+- choco installs go in ➡ ./bootstrap/windows/packages.config
+- **pacman packages go in ➡ ./bootstrap/linux/pacman-packages.txt**
+- **AUR packages go in ➡ ./bootstrap/linux/aur-packages.txt**
+- OS-specific bootstrap scripts go in ➡ ./bootstrap/mac/_.sh (macOS) or ./bootstrap/windows/_.sh (Windows)
+- universal bootstrap scripts (run on all platforms) go in ➡ ./bootstrap/\*.sh
+
 8. `sync/` folder contains sync-specific files:
    - npm global packages list ➡ ./sync/npm-packages.txt (one package per line)
    - custom sync extras or hooks ➡ ./sync/ (executable files will be run; non-executable files will be sourced)
