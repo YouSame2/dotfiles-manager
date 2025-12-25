@@ -4,12 +4,12 @@
 - [🌟 Highlights](#-highlights)
 - [💭 Why Use it](#-why-use-it)
 - [🚀 Getting Started](#-getting-started)
-  - [Dependencies](#dependencies)
-  - [Installation:](#installation)
-  - [Recommended Setup](#recommended-setup)
+    - [Dependencies](#dependencies)
+    - [Installation:](#installation)
+    - [Recommended Setup](#recommended-setup)
 - [🧠 Usage](#-usage)
 - [💥 What to Put Where](#-what-to-put-where)
-  - [Linux-Specific Notes](#linux-specific-notes)
+    - [Linux-Specific Notes](#linux-specific-notes)
 - [🙋🏽‍♂️ FAQ](#️-faq)
 - [📖 Resources](#-resources)
 - [✏ Contributing](#-contributing)
@@ -265,7 +265,7 @@ Ight i'll make this quick cuz I'm tired of writing, but I get that this can be a
 - choco installs go in ➡ ./bootstrap/windows/packages.config
 - **pacman packages go in ➡ ./bootstrap/linux/pacman-packages.txt**
 - **AUR packages go in ➡ ./bootstrap/linux/aur-packages.txt**
-- OS-specific bootstrap scripts go in ➡ ./bootstrap/mac/_.sh (macOS) or ./bootstrap/windows/_.sh (Windows)
+- OS-specific bootstrap scripts go in ➡ ./bootstrap/mac/_.sh (macOS) or ./bootstrap/windows/_.sh (Windows) or ./bootstrap/linux/_.sh (Linux)
 - universal bootstrap scripts (run on all platforms) go in ➡ ./bootstrap/\*.sh
 
 8. `sync/` folder contains sync-specific files:

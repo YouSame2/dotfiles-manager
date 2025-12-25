@@ -17,6 +17,9 @@ if [[ "$OS" = Darwin ]]; then
 elif [[ "$OS" =~ Cygwin|Msys|MinGw|MinGW ]]; then
   OS_DIR="$DOTFILES/bootstrap/windows"
   echo "------- Running Windows-specific bootstrap scripts from $OS_DIR..."
+elif [[ "$OS" =~ Linux ]]; then
+  OS_DIR="$DOTFILES/bootstrap/linux"
+  echo "------- Running Linux-specific bootstrap scripts from $OS_DIR..."
 else
   echo "Unsupported OS detected: $OS"
   exit 1
