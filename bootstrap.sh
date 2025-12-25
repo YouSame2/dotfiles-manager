@@ -7,6 +7,35 @@ set -e
 echo "------- Running bootstrap..."
 
 ####################
+# USER CONFIRMATIONS
+####################
+
+# Allow skipping interactive confirmations by setting DOTFILES_ASSUME_YES=1
+if [ "${DOTFILES_ASSUME_YES:-}" != "1" ]; then
+  echo "WARNING: This bootstrap may overwrite files or change your system. Double check your bootstrap files before continuing." >&2
+  read -r -p "Do you want to continue? (y/N) " reply
+  case "$reply" in
+    [Yy]|[Yy][Ee][Ss]) ;;
+    *) echo "Aborted by user."; exit 1 ;;
+  esac
+
+  # Very emphasized second confirmation
+  cat <<'EOFWARN'
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+!!!  VERY IMPORTANT: THIS ACTION CAN OVERWRITE FILES, REMOVE DATA, OR MODIFY  !!!
+!!!  YOUR SYSTEM. THIS IS IRREVERSIBLE UNLESS YOU HAVE BACKUPS.               !!!
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+EOFWARN
+
+  # Second confirmation (yes/no) — emphasized but simple
+  read -r -p "Are you ABSOLUTELY SURE you want to proceed? This may overwrite data. (y/N) " reply2
+  case "$reply2" in
+    [Yy]|[Yy][Ee][Ss]) ;;
+    *) echo "Aborted by user."; exit 1 ;;
+  esac
+fi
+
+####################
 # OS-SPECIFIC BOOTSTRAP
 ####################
 
