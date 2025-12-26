@@ -169,7 +169,7 @@ elif [[ "$OS" = GNU/Linux ]] || [[ "$OS" = Linux ]]; then
     if [ -n "$AUR_HELPER" ]; then
       echo "Installing fnm from AUR using $AUR_HELPER..."
       # prefer the package name 'fnm' from AUR; some users may prefer 'fnm-bin'
-      $AUR_HELPER -S --needed --noconfirm fnm || $AUR_HELPER -S --needed --noconfirm fnm-bin || echo "Failed to install fnm via $AUR_HELPER"
+      $AUR_HELPER -S --needed --noconfirm fnm-bin || echo "Failed to install fnm via $AUR_HELPER"
     else
       echo "No AUR helper (yay/paru) found — skipping fnm install on Linux"
     fi
