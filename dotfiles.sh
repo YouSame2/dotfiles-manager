@@ -269,8 +269,13 @@ elif [[ "$MODE" == "add" ]]; then
   fi
 
   # Make and move the target to the dotfiles directory
-  mkdir -p "$DOTFILES/$MKDIR_PATH" &&
-    mv -i "$TARGET" "$DOTFILES/$MKDIR_PATH" && {
+  mkdir -p "$DOTFILES/$MKDIR_PATH" && {
+    if [[ ! "$OS" =~ Cygwin|Msys|MinGW]]; then
+      sudo mv -i "$TARGET" "$DOTFILES/$MKDIR_PATH"
+    else
+      mv -i "$TARGET" "$DOTFILES/$MKDIR_PATH"
+    fi
+  } && {
 
     # add path to config
     LINK_DESTINATION="$CURRENT_DIR/$TARGET_NAME"
