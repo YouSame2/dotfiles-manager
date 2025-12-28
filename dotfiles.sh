@@ -270,7 +270,7 @@ elif [[ "$MODE" == "add" ]]; then
 
   # Make and move the target to the dotfiles directory
   mkdir -p "$DOTFILES/$MKDIR_PATH" && {
-    if [[ ! "$OS" =~ Cygwin|Msys|MinGW]]; then
+    if [[ ! "$OS" =~ Cygwin|Msys|MinGW ]]; then
       sudo mv -i "$TARGET" "$DOTFILES/$MKDIR_PATH"
     else
       mv -i "$TARGET" "$DOTFILES/$MKDIR_PATH"
